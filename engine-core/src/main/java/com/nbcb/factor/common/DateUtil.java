@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
+    public static final String YYYYMMDD_HH_MM_SS = "yyyyMMdd HH:mm:ss";
     private static final Logger log = LoggerFactory.getLogger(DateUtil.class);
 
     public static final String YYYY_MM_DD="yyyy-MM-dd";
@@ -251,6 +252,23 @@ public class DateUtil {
         date.set(Calendar.DATE,date.get(Calendar.DATE)-days);
         //返回现在时间减去x天的时间
         return date.getTime();
+    }
+
+    public static Date transferLongToDate(String format, Long millSec) {
+        Date date = new Date(millSec);
+        return dateToDateFormat(date,format);
+    }
+
+    private static Date dateToDateFormat(Date date, String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        String formatString = dateFormat.format(date);
+        Date data=null;
+        try {
+            data=dateFormat.parse(formatString);
+        } catch (ParseException e) {
+            log.error("data -> date 格式转换有误");
+        }
+        return date;
     }
 }
 

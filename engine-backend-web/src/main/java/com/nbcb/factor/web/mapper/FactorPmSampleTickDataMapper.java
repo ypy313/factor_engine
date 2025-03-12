@@ -12,7 +12,7 @@ public interface FactorPmSampleTickDataMapper {
      * 查询当亲货币对TICK颗粒度在x1Time与x2Time之间的行情
      */
     @DataSource(value = DataSourceType.smds)
-    int selectTickBarNum(String symbol,long x1Time);
+    int selectTickBarNum(String symbol,long x1Time,long x2Time);
     /**
      * 查询历史tick数据 ，返回每个货币对的一条最新的tick数据
      */

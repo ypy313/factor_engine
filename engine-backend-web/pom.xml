@@ -20,17 +20,14 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
-            <version>2.6.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.6.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.6.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -63,7 +60,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>2.5.3</version>
         </dependency>
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
@@ -90,11 +86,11 @@
             <artifactId>engine-gateway</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.ulisesbocchio</groupId>-->
-<!--            <artifactId>jasypt-spring-boot-starter</artifactId>-->
-<!--            <version>2.0.0</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.ulisesbocchio</groupId>-->
+        <!--            <artifactId>jasypt-spring-boot-starter</artifactId>-->
+        <!--            <version>2.0.0</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
@@ -146,10 +142,10 @@
         <!--            <groupId>io.micrometer</groupId>-->
         <!--            <artifactId>micrometer-registry-prometheus</artifactId>-->
         <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
@@ -161,11 +157,11 @@
             <version>5.3.3</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
-<!--        <dependency>-->
-<!--            <groupId>org.jasypt</groupId>-->
-<!--            <artifactId>jasypt</artifactId>-->
-<!--            <version>1.9.2</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jasypt</groupId>-->
+        <!--            <artifactId>jasypt</artifactId>-->
+        <!--            <version>1.9.2</version>-->
+        <!--        </dependency>-->
     </dependencies>
     <build>
         <finalName>engine-backend-web</finalName>

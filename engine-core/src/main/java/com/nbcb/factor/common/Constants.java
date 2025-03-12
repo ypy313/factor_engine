@@ -9,6 +9,49 @@ public class Constants {
     public final static String HTTP_SUCC = "success";//http请求成功代码
 
     public static final DateTimeFormatter TA_PATTERN = DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss SSS");
+    public static final String TA = "TA";
+    public static final String PRO_TRA_INDEX_SETTING = "indexSettings";
+    public static final String PARAMETER_INDEX_NAME = "indexName";
+    public static final String PARAMETER_MIN_PREFERENCES ="minPreferences" ;
+    public static final String PARAMETER_MAX_PREFERENCES ="maxPreferences" ;
+    public static final String PARAMETER_INDEX_PREFERENCES ="indexPreferences" ;
+    public static final String PARAMETER_MIN_FORMULA ="formula" ;
+    public static final String PRO_TRA_MONITOR_SETTING = "monitorExpression";
+    public static final String PRO_TRA_GLOBAL_SETTING = "globalParameter";
+    public static final String PRO_TRA_DATA_SOURCE_CONFIG = "dataSourceConfig";
+    public static final String MONITOR_ID = "monitorId";
+    public static final String MONITOR_EXPRESSION = "expression";
+    public static final String MONITOR_REMINDER_INTERVAL = "reminderInterval";
+    public static final String GLOBAL_PARAMETER_PARAMETER_NAME = "parameterName";
+    public static final String GLOBAL_PARAMETER_PARAMETER_VALUE = "parameterValue";
+    public static final String GLOBAL_PARAMETER_XPOINT1 = "xpoint1";
+    public static final String GLOBAL_PARAMETER_YPOINT1 = "ypoint1";
+    public static final String GLOBAL_PARAMETER_XPOINT2 = "xpoint2";
+    public static final String GLOBAL_PARAMETER_YPOINT2 = "ypoint2";
+    public static final String GLOBAL_PARAMETER_XCELL1 = "xcell1";
+    public static final String GLOBAL_PARAMETER_XCELL2 = "xcell2";
+    public static final String GLOBAL_PARAMETER_LATEST_XPOINT = "latestXPoint";
+    public static final String GLOBAL_PARAMETER_LATEST_XCELL = "latestXCell";
+    public static final String PRO_TRA_OHLC = "ohlc";
+    public static final String PRO_TRA_MARKET_DATA_SETTING = "marketDataSetting";
+    public static final String PRO_TRA_PERIODS_SETTING = "periodsSetting";
+    public static final String TA_INDEX_CATEGORY_QSX = "qsx";
+    public static final String BOND_PRICE = "BondPrice";
+    public static final String PM = "PM";
+    public static final String RIDING_YIELD_CURVE = "RidingYieldCurve";
+    public static final String SPREAD_ONE_POOL_STRATEGY = "SpreadOnePoolStrategy";
+    public static final String PRO_TRA_LEG1 = "leg1";
+    public static final String PRO_TRA_LEG2 = "leg2";
+    public static final String PRO_TRA_DATA_SOURCE = "dataSource";
+    public static final String PRO_TRA_PRELOAD = "preLoad";
+    public static final String PRO_TRA_MONITOR_EXPRESSION = "monitorExpression";
+    public static final String MONITOR_NAME = "monitorName";
+    public static final String MONITOR_UPPER = "upper";
+    public static final String MONITOR_DOWN = "down";
+    public static final String MONITOR_SIGNAL = "signal";
+    public static final String MONITOR_NORMAL = "NORMAL";
+    public static final String MONITOR_RECOMMEND = "RECOMMEND";
+    public static final String MONITOR_STRONG = "STRONG";
     public static String HTTP_RESPONSE_STATUS = "status";
     public static String HTTP_RESPONSE_DATA = "data";
     public static final String FACTOR_MARKET_PROCESSING_CONFIG_BOND_KEY ="bond";
@@ -36,5 +79,6 @@ public class Constants {
     public static final String MONITOR_SEND = "send";
 
     public static final String FACTOR_SPREAD_CBOND_VOLATILITY = "ChinaBondSpreadVolatility";
+    public final static String HTTP_FAIL = "error";
 }
 

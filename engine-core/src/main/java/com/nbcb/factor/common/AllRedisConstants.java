@@ -35,4 +35,7 @@ public class AllRedisConstants {
     //因子实例价差昨日值
     public static final String FACTOR_LASTDAY_VALUE =
             StringUtil.redisKeySpreadJoint(DataTypeEnum.LASTDAY_VALUE.getKey());
+
+    public static final String FACTOR_SPREAD_CBOND_VALUESINGAL =
+            StringUtil.redisKeySpreadJoint(DataTypeEnum.CBOND_VALUESINGAL.getKey());
 }
