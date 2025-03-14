@@ -24,4 +24,8 @@ public class BondConfigEntity {
     private String securityDecMapper;//债券描述映射
     private String securityKey;//分组编号
     private String createTime;//创建时间
+
+    public String getGroupKey() {
+        return this.securityDecMapper +"_"+ this.securityKey;
+    }
 }

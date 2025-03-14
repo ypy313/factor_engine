@@ -667,4 +667,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
         }
         return sb.toString();
     }
+
+    /**
+     * 组装String参数
+     */
+    public static final String formatParas(String value,Object... paras){
+        return MessageFormat.format(value, paras);
+    }
 }

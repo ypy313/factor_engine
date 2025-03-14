@@ -95,5 +95,7 @@ public class Constants {
     public static final String FR007_IR = "FR007.IR";
     public static final String SHIBOR3M_IR = "SHIBOR3M.IR";
     public static final String SHIBOR1W_IR = "SHIBOR1M.IR";
+
+
 }
 
