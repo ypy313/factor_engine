@@ -79,6 +79,21 @@ public class Constants {
     public static final String MONITOR_SEND = "send";
 
     public static final String FACTOR_SPREAD_CBOND_VOLATILITY = "ChinaBondSpreadVolatility";
-    public final static String HTTP_FAIL = "error";
+    public static final String HTTP_FAIL = "error";
+    //利率类型
+    public static final String RIDING_INTEREST_RATE_TYPE_LATEST_VALUE ="latestValue";
+    public static final String RIDING_INTEREST_RATE_TYPE_PAST_NEW_VALUE ="pastNewValue";
+    public static final String RIDING_INTEREST_RATE_TYPE_CUSTOM ="custom";
+    //持有期
+    public static final String RIDING_SHOW_HOLD_PERIOD_1M="1M";
+    public static final String RIDING_SHOW_HOLD_PERIOD_3M="3M";
+    public static final String RIDING_SHOW_HOLD_PERIOD_6M="6M";
+    public static final String RIDING_SHOW_HOLD_PERIOD_9M="9M";
+    public static final String RIDING_SHOW_HOLD_PERIOD_1Y="1Y";
+    public static final String RIDING_SHOW_HOLD_PERIOD_CUSTOM="custom";
+
+    public static final String FR007_IR = "FR007.IR";
+    public static final String SHIBOR3M_IR = "SHIBOR3M.IR";
+    public static final String SHIBOR1W_IR = "SHIBOR1M.IR";
 }
 

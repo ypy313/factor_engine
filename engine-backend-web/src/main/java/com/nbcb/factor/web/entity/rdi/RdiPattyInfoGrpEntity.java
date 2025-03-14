@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  * rdi机构信息实体
  */
 @Data
-public class RdiRattyInfoGrpEntity {
+public class RdiPattyInfoGrpEntity {
     private BigDecimal id;
     private String cnFullName;//机构信息
     private String cnShortName;//机构简称

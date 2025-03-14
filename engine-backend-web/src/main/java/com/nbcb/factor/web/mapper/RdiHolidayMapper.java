@@ -15,5 +15,5 @@ public interface RdiHolidayMapper {
     /**
      * 根据日期查询是否是假日
      */
-    List<String> selectRidHoliday(@Param("date") String date);
+    List<String> selectRidHolidayByDate(@Param("date") String date);
 }
