@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.CbondanalysiscnbdMapper">
+    <resultMap type="com.nbcb.factor.web.entity.Cbondanalysiscnbd" id="cbondanalysiscnbdResult">
+        <result property="objectId" column="object_Id"/>
+        <result property="sInfoWindcode" column="s_Info_Windcode"/>
+        <result property="tradeDt" column="trade_Dt"/>
+        <result property="bAnalMatuCnbd" column="b_Anal_Matu_Cnbd"/>
+        <result property="bAnalDirtyCnbd" column="b_Anal_Dirty_Cnbd"/>
+        <result property="bAnalAccrintCnbd" column="b_Anal_Accrint_Cnbd"/>
+        <result property="bAnalNetCnbd" column="b_Anal_Net_Cnbd"/>
+        <result property="bAnalYieldCnbd" column="b_Anal_Yield_Cnbd"/>
+        <result property="bAnalModiduraCnbd" column="b_Anal_Modidura_Cnbd"/>
+        <result property="bAnalCnvxtyCnbd" column="b_Anal_Cnvxty_Cnbd"/>
+        <result property="bAnalVobpCnbd" column="b_Anal_Vobp_Cnbd"/>
+        <result property="bAnalSprcnxtCnbd" column="b_Anal_Sprcnxt_Cnbd"/>
+        <result property="bAnalSprduraCnbd" column="b_Anal_Sprdura_Cnbd"/>
+        <result property="bAnalAccrintcloseCnbd" column="b_Anal_Accrintclose_Cnbd"/>
+        <result property="bAnalPrice" column="b_Anal_Price"/>
+        <result property="bAnalNetprice" column="b_Anal_Netprice"/>
+        <result property="bAnalYield" column="b_Anal_Yield"/>
+        <result property="bAnalModifieddduration" column="b_Anal_Modifieddduration"/>
+        <result property="bAnalConvexity" column="b_Anal_Convexity"/>
+        <result property="bAnalBpvalue" column="b_Anal_Bpvalue"/>
+        <result property="bAnalSduration" column="b_Anal_Sduration"/>
+        <result property="bAnalScnvxty" column="b_Anal_Scnvxty"/>
+        <result property="bAnalInterestdurationCnbd" column="b_Anal_Interestduration_Cnbd"/>
+        <result property="bAnalInterestcnvxtyCnbd" column="b_Anal_Interestcnvxty_Cnbd"/>
+        <result property="bAnalInterestduration" column="b_Anal_Interestduration"/>
+        <result property="bAnalInterestcnvxty" column="b_Anal_Interestcnvxty"/>
+        <result property="bAnalPriceCnbd" column="b_Anal_Price_Cnbd"/>
+        <result property="bAnalBpyield" column="b_Anal_Bpyield"/>
+        <result property="bAnalExchange" column="b_Anal_Exchange"/>
+        <result property="bAnalCredibility" column="b_Anal_Credibility"/>
+        <result property="bAnalResidualPri" column="b_Anal_ResidualPri"/>
+        <result property="bAnalExerciseRate" column="b_Anal_Exercise_Rate"/>
+        <result property="bAnalPriority" column="b_Anal_Priority"/>
+    </resultMap>
+    <select id="backupCopyCbondanalysiscnbd" parameterType="String">
+        insert into CBONDANALYSISCNBDALL
+        select *
+        from (select *
+              from CBONDANALYSISCNBD1
+              where trade_dt = #{dateTime}
+              union all
+              select *
+              from CBONDANALYSISCNBD2
+              where trade_dt = #{dateTime}
+              union all
+              select *
+              from CBONDANALYSISCNBD3
+              where trade_dt = #{dateTime}
+              union all
+              select *
+              from CBONDANALYSISCNBD4
+              where trade_dt = #{dateTime}
+              union all
+              select *
+              from CBONDANALYSISCNBD5
+              where trade_dt = #{dateTime}) cnbd
+    </select>
+
+    <select id="getCbondanalysiscnbdCount" parameterType="String" resultType="int">
+        select count(1)
+        from (
+            select * from  CBONDANALYSISCNBD1 where trade_dt = #{dateTime}
+            union all
+            select * from  CBONDANALYSISCNBD2 where trade_dt = #{dateTime}
+            union all
+            select * from  CBONDANALYSISCNBD3 where trade_dt = #{dateTime}
+            union all
+            select * from  CBONDANALYSISCNBD4 where trade_dt = #{dateTime}
+            union all
+            select * from  CBONDANALYSISCNBD5 where trade_dt = #{dateTime}
+             )cnbd
+    </select>
+
+    <delete id="deleteCbondanalysiscnbd" parameterType="String">
+        delete from CBONDANALYSISCNBDALL where trade_dt = #{dateTime}
+    </delete>
+
+    <select id="selectBondRealTimeRateAll" parameterType="String"
+            resultType="com.nbcb.factor.entity.Cbondanalysiscnbd">
+        select * from cbondanalysiscnbdall l where
+            l.b_anal_credibility = '推荐'
+        and l.trade_dt= (select max(trade_dt) from cbondanalysiscnbdall)
+        and l.s_info_windcode in
+            (select distinct s_info_windcode from factor.cbonddescription)
+    </select>
+
+    <select id="getBondRealTimeRate" parameterType="String" resultMap="cbondanalysiscnbdResult">
+        select * from cbondanalysiscnbdall l where l.s_info_windcode = #{bond} and l.b_ananl_credibility = '推荐'
+        and l.trade_dt = (select max(c.trade_dt) from cbondanalysiscnbdall c where c.s_info_windcode = #{bonds}
+            and c.b_anal_credibility= '推荐')
+    </select>
+
+</mapper>

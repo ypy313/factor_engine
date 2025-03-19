@@ -14,11 +14,12 @@ import com.nbcb.factor.web.util.ExceptionUtils;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.log.XxlJobLogger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-
+@Component
 public class ChinaBondSpreadVolatilityCalcJob implements FactorCalcJob {
     @Autowired
     private BondVolatilityService bondVolatilityService;

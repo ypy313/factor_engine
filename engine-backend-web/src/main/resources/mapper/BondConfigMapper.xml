@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.BondConfigMapper">
+    <resultMap type="com.nbcb.factor.web.entity.BondConfigEntity" id="BondConfigEntityResult">
+        <result property="id" column="id"/>
+        <result property="securityId" column="security_id"/>
+        <result property="symbol" column="symbol"/>
+        <result property="issueSize" column="issue_size"/>
+        <result property="securityType" column="security_type"/>
+        <result property="securityTypeId" column="security_type_id"/>
+        <result property="securityDec" column="security_dec"/>
+        <result property="securityDecMapper" column="security_dec_mapper"/>
+        <result property="securityKey" column="security_key"/>
+        <result property="createTime" column="create_time"/>
+        <result property="termToMaturityString" column="term_to_maturity_string"/>
+        <result property="valuation" column="valuation"/>
+        <result property="valuationDate" column="valuation_date"/>
+    </resultMap>
+    <!-- 查询最新的中债估值 -->
+    <select id="selectBondConfigEntityList" resultMap="BondConfigEntityResult" resultSetType="FORWARD_ONLY" fetchSize="1000">
+        select t.id,
+               t.security_id,
+               t.symbol,
+               t.issue_size,
+               t.security_type,
+               t.security_dec,
+               t.security_type_id,
+               t.security_dec_mapper,
+               t.security_key,
+               t.create_time,
+               t.term_to_maturity_string,
+               t.valuation,
+               t.valuation_date
+        from bond_config t
+
+    <update id="truncateBondConfig">
+        truncate table bond_cofnig
+    </update>
+
+    <insert id="insertBondConfig">
+        insert into bond_config(
+        <if test="securityId !=null and securityId != ''"> security_id,</if>
+        <if test="symbol !=null and symbol != ''"> symbol,</if>
+        <if test="issueSize !=null and issueSize != ''"> issue_size,</if>
+        <if test="securityType !=null and securityType != ''"> security_type,</if>
+        <if test="securityDec !=null and securityDec != ''"> security_dec,</if>
+        <if test="securityTypeId !=null and securityTypeId != ''"> security_type_id,</if>
+        <if test="securityDecMapper !=null and securityDecMapper != ''"> security_dec_mapper,</if>
+        <if test="securityKey !=null and securityKey != ''"> security_key,</if>
+        <if test="createTime !=null and createTime != ''"> create_time,</if>
+        <if test="termToMaturityString !=null and termToMaturityString != ''"> term_to_maturity_string,</if>
+        <if test="valuation !=null and valuation != ''"> valuation,</if>
+        <if test="valuationDate !=null and valuationDate != ''"> valuation_date,</if>
+        id
+        )values (
+        <if test="securityId !=null and securityId != ''">#{securityId},</if>
+        <if test="symbol !=null and symbol != ''"> #{symbol},</if>
+        <if test="issueSize !=null and issueSize != ''"> #{issueSize},</if>
+        <if test="securityType !=null and securityType != ''"> #{securityType},</if>
+        <if test="securityDec !=null and securityDec != ''"> #{securityDec},</if>
+        <if test="securityTypeId !=null and securityTypeId != ''"> #{securityTypeId},</if>
+        <if test="securityDecMapper !=null and securityDecMapper != ''"> #{securityDecMapper},</if>
+        <if test="securityKey !=null and securityKey != ''"> #{securityKey},</if>
+        <if test="createTime !=null and createTime != ''"> #{createTime},</if>
+        <if test="termToMaturityString !=null and termToMaturityString != ''"> #{termToMaturityString},</if>
+        <if test="valuation !=null and valuation != ''"> #{valuation},</if>
+        <if test="valuationDate !=null and valuationDate != ''"> #{valuationDate},</if>
+        #{id}
+        )
+    </insert>
+</mapper>

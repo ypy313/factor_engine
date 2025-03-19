@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.CalResultMapper">
+
+    <insert id="insertCalResult" parameterType="com.nbcb.factor.web.entity.CalResultData">
+        insert into FACTOR_CAL_RESULT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="summaryType !=null and summaryType != ''"> CAL_TYPE,</if>
+            <if test="strategyName !=null and strategyName != ''"> STRATEGY_NAME,</if>
+            <if test="factorName !=null and factorName != ''"> INSTANCE_NAME,</if>
+            <if test="instanceId !=null and instanceId != ''"> INSTANCE_ID,</if>
+            <if test="period !=null and period != ''"> PERIOD,</if>
+            <if test="srcTimestamp !=null and srcTimestamp != ''"> SRC_TIMESTAMP,</if>
+            <if test="symbol !=null and symbol != ''"> SYMBOL,</if>
+            <if test="calResult !=null and calResult != ''"> CAL_RESULT,</if>
+            <if test="beginTime !=null and beginTime != ''"> BEGIN_TIME,</if>
+            <if test="endTime !=null and endTime != ''"> END_TIME</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            FACTOR_CAL_RESULT_SEQUENCE.NEXTVAL,
+            <if test="summaryType !=null and summaryType != ''"> #{summaryType},</if>
+            <if test="strategyName !=null and strategyName != ''"> #{strategyName},</if>
+            <if test="factorName !=null and factorName != ''"> #{factorName},</if>
+            <if test="instanceId !=null and instanceId != ''"> #{instanceId},</if>
+            <if test="period !=null and period != ''"> #{period},</if>
+            <if test="srcTimestamp !=null and srcTimestamp != ''">
+             to_timestamp(#{srcTimestamp},'yyyy/mm/dd hh24:mi:ss FF3'),
+            </if>
+            <if test="symbol !=null and symbol != ''"> #{symbol},</if>
+            <if test="calResult !=null and calResult != ''"> #{calResult},</if>
+            <if test="beginTime !=null and beginTime != ''">
+                to_timestamp(#{beginTime},'yyyy/mm/dd hh24:mi:ss FF3'),
+            </if>
+            <if test="endTime !=null and endTime != ''">
+                to_timestamp(#{endTime},'yyyy/mm/dd hh24:mi:ss FF3')
+            </if>
+        </trim>
+    </insert>
+</mapper>

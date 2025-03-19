@@ -1,6 +1,6 @@
 package com.nbcb.factor.web.mapper;
 
-import com.nbcb.factor.entity.riding.Cbondanalysiscnbd;
+import com.nbcb.factor.entity.Cbondanalysiscnbd;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
