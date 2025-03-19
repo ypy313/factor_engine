@@ -2,6 +2,7 @@ package com.nbcb.factor.common;
 
 import com.nbcb.factor.enums.BusinessEnum;
 import com.nbcb.factor.enums.SystemEnum;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,14 @@ public class StringUtil {
         List<String> redisKey = new ArrayList<>();
         redisKey.add(SystemEnum.FACTOR.getKey());
         redisKey.add(BusinessEnum.FX.getKey());
+        redisKey.add(dateTypeKey);
+        return String.join(":",redisKey);
+    }
+
+    public static String redisKeyRidingJoint(String dateTypeKey){
+        List<String> redisKey = new ArrayList<>();
+        redisKey.add(SystemEnum.FACTOR.getKey());
+        redisKey.add(BusinessEnum.RIDING.getKey());
         redisKey.add(dateTypeKey);
         return String.join(":",redisKey);
     }
@@ -43,6 +52,14 @@ public class StringUtil {
         List<String> redisKey = new ArrayList<>();
         redisKey.add(SystemEnum.FACTOR.getKey());
         redisKey.add(BusinessEnum.FX.getKey()+"_"+BusinessEnum.PM.getKey());
+        redisKey.add(dateTypeKey);
+        return String.join(":",redisKey);
+    }
+
+    public static String redisKeyCommonJoint(String dateTypeKey){
+        List<String> redisKey = new ArrayList<>();
+        redisKey.add(SystemEnum.FACTOR.getKey());
+        redisKey.add(BusinessEnum.COMMON.getKey());
         redisKey.add(dateTypeKey);
         return String.join(":",redisKey);
     }

@@ -11,7 +11,6 @@ import com.nbcb.factor.enums.DataProcessNoticeTypeEnum;
 import com.nbcb.factor.enums.SystemEnum;
 import com.nbcb.factor.event.StrategyNoticeOutput;
 import com.nbcb.factor.output.bondprice.BondPriceOutputResult;
-import com.nbcb.factor.web.controller.BondConfigController;
 import com.nbcb.factor.web.entity.CurrencyValuation;
 import com.nbcb.factor.web.entity.SysDictData;
 import com.nbcb.factor.web.job.basic.FactorBasicJob;

@@ -38,4 +38,21 @@ public class AllRedisConstants {
 
     public static final String FACTOR_SPREAD_CBOND_VALUESINGAL =
             StringUtil.redisKeySpreadJoint(DataTypeEnum.CBOND_VALUESINGAL.getKey());
+    //贵金属节假日开始时间
+    public static final String FACTOR_PM_HOLIDAY = StringUtil
+            .redisKeyPMJoint(DataTypeEnum.HOLIDAY.getKey());
+
+    public static final String FACTOR_PM_INDEX_CATEGORY =
+            StringUtil.redisKeyPMJoint(DataTypeEnum.INDEX_CATEGORY.getKey());
+
+    //FACTOR:RIDING:CONFIG:* 单个骑乘配置
+    public static final String FACTOR_CONFIG_RIDING_SINGLE =
+            StringUtil.redisKeyRidingJoint(DataTypeEnum.RIDING_CONFIG.getKey());
+    //FACTOR:RIDING:CONFIG_LIST骑乘配置集合
+    public static final String FACTOR_CONFIG_RIDING_LIST =
+            StringUtil.redisKeyRidingJoint(DataTypeEnum.RIDING_CONFIG_LIST.getKey());
+
+    //FACTOR:COMMON:CBOND_CURVE_CNBD 收益率曲线
+    public static final String FACTOR_COMMON_CBOND_CURVE_CNBD =
+            StringUtil.redisKeyCommonJoint(DataTypeEnum.CBOND_CURVE_CNBD.getKey());
 }
