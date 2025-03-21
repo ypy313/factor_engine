@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.RidingYieldCurveMapper">
+    <update id="truncateCbonddescription">
+        truncate table factor.Cbonddescription
+    </update>
+
+    <insert id="insertCbonddescription">
+        insert into factor.Cbonddescription
+        SELECT * FROM factor.Cbonddescription_info where B_INFO_ISSUERCODE in('OMT64BBFB6','04MSF620A3','200085D','2002700')
+        and substr(S_INFO_WINDCODE, instr(S_INFO_WINDCODE,'.'))='IB'
+        and B_INFO_ACTUALBENCHMARK = 'A/A'
+        and S_INFO_WINDCODE not like '%QF.IB'
+        and B_INFO_FULLNAME not like '%增发%' AND B_INFO_FULLNAME NOT like '%续发%'
+        and B_INFO_FULLNAME not like '%置换%' and B_INFO_FULLNAME not like '%美元%'
+        and B_INFO_FULLNAME not like '%次级债%'
+        and B_INFO_MATURITYDATE < (select to_char(SYSDATE+365*15,'yyyyMMdd') from dual )
+        and B_INFO_CARRYDATE <= #{todayStr,jdbcType=VARCHAR}
+        and B_INFO_MATURITYDATE > #{todayStr,jdbcType=VARCHAR}
+        and B_INFO_PAYMENTDATE > #{todayStr,jdbcType=VARCHAR}
+    </insert>
+
+    <select id="selectCbonddescriptionInfa" resultType="Integer">
+        SELECT count(*) FROM factor.Cbonddescription_infa where B_INFO_ISSUERCODE in('OMT64BBFB6','04MSF620A3','200085D','2002700')
+        and substr(S_INFO_WINDCODE, instr(S_INFO_WINDCODE,'.'))='IB'
+        and B_INFO_ACTUALBENCHMARK = 'A/A'
+        and S_INFO_WINDCODE not like '%QF.IB'
+        and B_INFO_FULLNAME not like '%增发%' AND B_INFO_FULLNAME NOT like '%续发%'
+        and B_INFO_FULLNAME not like '%置换%' and B_INFO_FULLNAME not like '%美元%'
+        and B_INFO_FULLNAME not like '%次级债%'
+        and B_INFO_MATURITYDATE < (select to_char(SYSDATE+365*15,'yyyyMMdd') from dual )
+        and B_INFO_CARRYDATE <= #{todayStr,jdbcType=VARCHAR}
+        and B_INFO_MATURITYDATE > #{todayStr,jdbcType=VARCHAR}
+        and B_INFO_PAYMENTDATE > #{todayStr,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteCbondCf">
+        delete from factor.CBONDCF
+        where OBJECT_ID in
+        (select OBJECT_ID from factor.CBONDCF_info
+        where to_char(UPDATE,'yyyyMMdd') = #{yesterdayStr}
+        and S_INFO_WINDCODE in (select distinct S_INFO_WINDCODE from factor.Cbonddescription))
+    </delete>
+
+    <insert id="insertCbondCf">
+        insert into factor.CBONDCF
+        select * from factor.CBONDCF_info
+        where to_char(UPDATE,'yyyyMMdd') = #{yesterdayStr}
+        and S_INFO_WINDCODE in (select distinct S_INFO_WINDCODE from factor.Cbonddescription)
+    </insert>
+
+    <insert id="insertCbondCfInfaHis">
+        insert into factor.CBONDCF_info_his
+        select * from factor.CBONDCF_info
+        where to_char(UPDATE,'yyyyMMdd') = #{yesterdayStr}
+        and S_INFO_WINDCODE in (select distinct S_INFO_WINDCODE from factor.Cbonddescription)
+    </insert>
+
+    <insert id="insertCbondCurveCNBD">
+        insert into factor.cBondCurveCNBD
+        select * from factor.cBondCurveCNBD_info
+        where trade_dt = #{yesterdayStr,jdbcType=VARCHAR}
+    </insert>
+
+    <delete id="deleteCbondInBankRateCfets">
+        delete
+        from factor.CBONDINTERBANKMARKETRATECFETS
+        where OBJECT_ID in (select OBJECT_ID from factor.cbondinterbankmarketratecfets_info)
+    </delete>
+
+    <insert id="insertCbondInBankRateCfets">
+        insert into factor.CBONDINTERBANKMARKETRATECFETS select * from factor.cbondinbankratecfets_info
+    </insert>
+
+    <delete id="deleteShiborprices">
+        delete from factor.shiborprices where OBJECT_ID in (select OBJECT_ID from factor.shiborprices_info)
+    </delete>
+
+    <insert id="insertShiborprices">
+        insert into factor.shiborprices select * from factor.shiborprices_info
+    </insert>
+
+    <update id="truncateCbondCf">
+        truncate table factor.CBONDCF
+    </update>
+
+    <insert id="insertAllCbondCfByCbonddescription">
+        insert into factor.CBONDCF select * from factor.CBONDCF_info
+        where S_INFO_WINDCODE in
+              (select distinct S_INFO_WINDCODE from factor.Cbonddescription)
+    </insert>
+
+    <update id="truncateCBONDINTERBANKMARKETRATECFETS">
+        truncate table factor.CBONDINTERBANKMARKETRATECFETS
+    </update>
+
+    <update id="truncateShiborprices">
+        truncate table factor.shiborprices
+    </update>
+
+    <select id="selectInsertCountAboutRepo" resultType="integer">
+        select count(*) from factor.cbondinterbankratecfets_info
+    </select>
+
+    <select id="selectInsertCountAboutShibor" resultType="integer">
+        select count(*) from factor.shiborprices_info
+    </select>
+
+    <select id="selectCBONDCF" resultType="Integer">
+        select count(*) from factor.CBONDCF_info
+        where S_INFO_WINDCODE in (select distinct S_INFO_WINDCODE from factor.Cbonddescription)
+    </select>
+</mapper>

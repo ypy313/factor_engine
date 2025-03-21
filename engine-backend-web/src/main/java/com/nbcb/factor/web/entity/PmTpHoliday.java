@@ -9,7 +9,7 @@ import lombok.ToString;
  */
 @Getter@Setter@ToString
 public class PmTpHoliday {
-    private String holiday;
+    private String holidayDate;
     private String holidayName;
     private String note;
 }

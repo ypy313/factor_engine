@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.RdiBondSecurityMasterMapper">
+    <resultMap type="com.nbcb.factor.web.entity.rdi.RdiBondSecurityMasterEntity" id="RdiBondSecurityMasterEntityResult">
+        <result property="id" column="id"/>
+        <result property="securityId" column="security_id"/>
+        <result property="marketSuffix" column="market_suffix"/>
+        <result property="securitySuperType" column="security_super_type"/>
+        <result property="securityDec" column="security_dec"/>
+        <result property="securityType" column="security_type"/>
+        <result property="securityTypeId" column="security_type_id"/>
+        <result property="symbol" column="symbol"/>
+        <result property="issueSize" column="issue_size"/>
+        <result property="par" column="par"/>
+        <result property="maturityDate" column="maturity_date"/>
+        <result property="termToMaturityString" column="term_to_maturity_string"/>
+        <result property="issuer" column="issuer"/>
+        <result property="creditRating" column="credit_rating"/>
+        <result property="couponRate" column="coupon_rate"/>
+        <result property="text" column="text"/>
+        <result property="cdcValuePx" column="cdc_value_px"/>
+        <result property="accruedInterestAmt" column="accrued_interest_amt"/>
+        <result property="dayCount" column="day_count"/>
+        <result property="circulationSize" column="circulation_size"/>
+        <result property="latest" column="latest"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectRdiBondSecurityMasterEntityList" resultMap="RdiBondSecurityMasterEntityResult" resultSetType="FORWARD_ONLY" fetchSize="1000">
+        select t.id,
+               t.security_id,
+               t.market_suffix,
+               t.security_super_type,
+               t.security_dec,
+               t.security_type,
+               t.security_type_id,
+               t.symbol,
+               t.issue_size,
+               t.par,
+               t.maturity_date,
+               t.term_to_maturity_string,
+               t.issuer,
+               t.credit_rating,
+               t.coupon_rate,
+               t.text,
+               t.cds_value_px,
+               t.accrued_interest_amt,
+               t.day_count,
+               t.circulation_size,
+               t.latest,
+               t.update_time
+        from rdi_bond_security_master t
+    </select>
+</mapper>

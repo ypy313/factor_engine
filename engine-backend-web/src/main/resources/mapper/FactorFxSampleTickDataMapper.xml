@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.FactorFxSampleTickDataMapper">
+    <select id="selectTickBarNum" resultType="int">
+        select count(*)
+        from factor_fx_sample_tick_data
+        <where>
+            <if test="symbol !='' and symbol !=''">and symbol =#{symbol}</if>
+            <if test="x1Time !='' and x1Time !=''">and #{x1Time} <![CDATA[<]]> event_time</if>
+            <if test="x2Time !='' and x2Time !=''">and #{x2Time} <![CDATA[>=]]> event_time</if>
+        </where>
+    </select>
+
+    <select id="selectTickInfo" resultType="integer">
+        select count(*)
+        from factor_fx_sample_tick_data
+        <where>
+            <if test="symbol !='' and symbol !=''">and symbol =#{symbol}</if>
+            <if test="time !='' and time !=''">and to_char(event_time/1000*60*60*24) <![CDATA[=]]> to_date('1970-01-01 08:00:00','YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') <![CDATA[=]]> #{time}</if>
+        </where>
+    </select>
+</mapper>

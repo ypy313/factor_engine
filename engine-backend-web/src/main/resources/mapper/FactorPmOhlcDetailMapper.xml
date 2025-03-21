@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.FactorPmOhlcDetailMapper">
+    <insert id="insertFactorPmOhlcDetailList" parameterType="com.nbcb.factor.web.entity.PmOhlcValueEvent">
+        INSERT INTO smds.FACTOR_PM_OHLC_DETAIL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            ID,
+            <if test="eventId != null and eventId != ''">EVENT_ID,</if>
+            <if test="ric != null and ric != ''">RIC,</if>
+            <if test="symbol != null and symbol != ''">SYMBOL,</if>
+            <if test="source != null and source != ''">SOURCE,</if>
+            <if test="period != null and period != ''">PERIOD,</if>
+            <if test="instanceId != null and instanceId != ''">INSTANCE_ID,</if>
+            <if test="srcTimeStamp != null and srcTimeStamp != ''">SRC_TIMESTAMP,</if>
+            <if test="beginTime != null and beginTime != ''">BEGIN_TIME,</if>
+            <if test="endTime != null and endTime != ''">END_TIME,</if>
+            <if test="openPrice != null and openPrice != ''">OPEN_PRICE,</if>
+            <if test="highPrice != null and highPrice != ''">HIGH_PRICE,</if>
+            <if test="lowPrice != null and lowPrice != ''">LOW_PRICE,</if>
+            <if test="closePrice != null and closePrice != ''">CLOSE_PRICE,</if>
+            DB_CREATE_TIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="eventId != null and eventId != ''">#{eventId},</if>
+            <if test="ric != null and ric != ''">#{ric},</if>
+            <if test="symbol != null and symbol != ''">#{symbol},</if>
+            <if test="source != null and source != ''">#{source},</if>
+            <if test="period != null and period != ''">#{period},</if>
+            <if test="instanceId != null and instanceId != ''">#{instanceId},</if>
+            <if test="srcTimeStamp != null and srcTimeStamp != ''">to_timestamp(#{srcTimeStamp}, 'yyyy/mm/dd hh24:mi:ss FF3'),</if>
+            <if test="beginTime != null and beginTime != ''">to_timestamp(#{beginTime}, 'yyyy/mm/dd hh24:mi:ss FF3'),</if>
+            <if test="endTime != null and endTime != ''">to_timestamp(#{endTime}, 'yyyy/mm/dd hh24:mi:ss FF3'),</if>
+            <if test="openPrice != null and openPrice != ''">#{openPrice},</if>
+            <if test="highPrice != null and highPrice != ''">#{highPrice},</if>
+            <if test="lowPrice != null and lowPrice != ''">#{lowPrice},</if>
+            <if test="closePrice != null and closePrice != ''">#{closePrice},</if>
+            SYSDATE
+        </trim>
+    </insert>
+</mapper>

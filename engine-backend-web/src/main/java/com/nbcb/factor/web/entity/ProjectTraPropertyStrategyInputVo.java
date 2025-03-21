@@ -21,5 +21,5 @@ public class ProjectTraPropertyStrategyInputVo {
     private String configType;
     private Integer rowNum;
     private String indicatorExec;//执行指标公式
-    private List<ProjectTraConfigKeyGroupVo> projectTraConfigKeyGroupVoList;//配置值分组
+    private List<ProjectTraConfigKeyGroupVo> projectTraStrategyInstanceInputVoList;//配置值分组
 }

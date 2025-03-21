@@ -1,0 +1,26 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.RdiPattyInfoGrpMapper">
+    <resultMap type="com.nbcb.factor.web.entity.rdi.RdiPattyInfoGrpEntity" id="RdiPattyInfoGrpEntityResult">
+        <result property="id" column="id"/>
+        <result property="cnFullName" column="cn_full_name"/>
+        <result property="cnShortName" column="cn_short_name"/>
+        <result property="enFullName" column="en_full_name"/>
+        <result property="enShortName" column="en_short_name"/>
+        <result property="partyCode21" column="party_code21"/>
+        <result property="partyCode6" column="party_code6"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <!-- 查询所有的机构信息-->
+    <select id="selectRdiPattyInfoGrpEntityList" resultMap="RdiPattyInfoGrpEntityResult" resultSetType="FORWARD_ONLY" fetchSize="1000">
+        select t.id,
+               t.cn_full_name,
+               t.cn_short_name,
+               t.en_full_name,
+               t.en_short_name,
+               t.party_code21,
+               t.party_code6,
+               t.update_time
+        from rdi_party_info_grp t
+    </select>
+</mapper>

@@ -20,7 +20,7 @@ public class FactorInstanceConfigData {
     //数据类型
     private String dataType;
     //默认值
-    private String defaultValue;
+    private String defauleValue;
     //是否是初始值Y-是 N-否
     private  String isInitialValue;
     //最小值
@@ -30,9 +30,9 @@ public class FactorInstanceConfigData {
     //显示排序
     private Integer displayOrder;
     //创建人
-    private Long createBy;
+    private Long createdBy;
     //创建时间
-    private Date createTime;
+    private Date createdTime;
     //更新人
     private Long updateBy;
     //更新时间
@@ -44,13 +44,13 @@ public class FactorInstanceConfigData {
         this.dataKey = factorInstanceConfigDataBuilder.dataKey;
         this.dataName = factorInstanceConfigDataBuilder.dataName;
         this.dataType = factorInstanceConfigDataBuilder.dataType;
-        this.defaultValue = factorInstanceConfigDataBuilder.defalueValue;
+        this.defauleValue = factorInstanceConfigDataBuilder.defalueValue;
         this.isInitialValue = factorInstanceConfigDataBuilder.isInitialValue;
         this.minValue = factorInstanceConfigDataBuilder.minValue;
         this.maxValue = factorInstanceConfigDataBuilder.maxValue;
         this.displayOrder = factorInstanceConfigDataBuilder.displayOrder;
-        this.createBy = factorInstanceConfigDataBuilder.createBy;
-        this.createTime = factorInstanceConfigDataBuilder.createTime;
+        this.createdBy = factorInstanceConfigDataBuilder.createBy;
+        this.createdTime = factorInstanceConfigDataBuilder.createTime;
         this.updateBy = factorInstanceConfigDataBuilder.updateBy;
         this.updateTime = factorInstanceConfigDataBuilder.updateTime;
     }

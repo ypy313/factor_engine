@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.StrategyInstanceMapper">
+
+    <resultMap type="com.nbcb.factor.web.entity.StrategyInstanceFactor" id="StrategyInstanceFactorResult">
+        <result property="definitionName" column="DEFINITION_NAME"/>
+        <result property="instanceId" column="INSTANCE_ID"/>
+        <result property="instanceName" column="INSTANCE_NAME"/>
+        <result property="symbols" columns="SYMBOLS"/>
+        <result property="factorName" column="FACTOR_NAME"/>
+        <result property="calInputName" column="CAL_INPUT_NAME"/>
+        <result property="type" column="TYPE"/>
+        <result property="defaultValue" column="DEFAULT_VALUE"/>
+    </resultMap>
+
+    <select id="getOutStrainsList" parameterType="String" resultMap="StrategyInstanceFactorResult">
+        SELECT
+        DEF.NAME as DEFINITION_NAME,
+        INS.ID as INSTANCE_ID,
+        INS.NAME as INSTANCE_NAME,
+        INS.DS.SYMBOLS,
+        CAL.INPUT.FACTOR_NAME,
+        CAL.INPUT.NAME as CAL_INPUT_NAME,
+        CAL.INPUT.TYPE,
+        CAL.INPUT.DEFAULT_VALUE
+        FROM
+        STRATEGY_DEFINITION DEF
+        LEFT JOIN STRATEGY_INSTANCE INS ON INS.DEFINITION_ID = DEF.ID
+        LEFT JOIN STRATEGY_INSTANCE_DS_INPUT INS_DS ON INS_DS.DEFINITION_ID = DEF.ID
+        AND INS_DS.INSTANCE_ID = INS.ID
+        LEFT JOIN STRATEGY_INSTANCE_CAL_INPUT CAL_INPUT ON CAL_INPUT.DEFINITION_ID = DEF.ID
+        AND CAL_INPUT.INSTANCE_ID = INS.ID
+        <where>
+            INS.IS_DELETED = '0' AND INS.STATUS != 'STOP'
+        </where>
+    </select>
+
+    <select id="getOutStrainsList" parameterType="String" resultMap="StrategyInstanceFactorResult">
+        SELECT
+        DEF.NAME as DEFINITION_NAME,
+        INS.ID as INSTANCE_ID,
+        INS.NAME as INSTANCE_NAME,
+        INS.DS.SYMBOLS,
+        CAL.INPUT.FACTOR_NAME,
+        CAL.INPUT.NAME as CAL_INPUT_NAME,
+        CAL.INPUT.TYPE,
+        CAL.INPUT.DEFAULT_VALUE
+        FROM
+        STRATEGY_DEFINITION DEF
+        LEFT JOIN STRATEGY_INSTANCE INS ON INS.DEFINITION_ID = DEF.ID
+        LEFT JOIN STRATEGY_INSTANCE_DS_INPUT INS_DS ON INS_DS.DEFINITION_ID = DEF.ID
+        AND INS_DS.INSTANCE_ID = INS.ID
+        LEFT JOIN STRATEGY_INSTANCE_CAL_INPUT CAL_INPUT ON CAL_INPUT.DEFINITION_ID = DEF.ID
+        AND CAL_INPUT.INSTANCE_ID = INS.ID
+        <where>
+            INS.IS_DELETED = '0' AND INS.STATUS != 'STOP'
+            <if test="(strategyName !=null and strategyName !='') and (strategyInstanceName!=null and strategyInstanceName!='')">
+                AND DEF.NAME = #{strategyName} and INS.NAME = #{strategyInstanceName}
+            </if>
+            <if test="strategyName !=null and (strategyInstanceName == null or strategyInstanceName == '')">
+                AND DEF.NAME = #{strategyName}
+            </if>
+            <if test="strategyInstanceName !=null and (strategyName == null or strategyName == '')">
+                AND INS.NAME = #{strategyInstanceName}
+            </if>
+        </where>
+        ORDER BY DEF.NAME, INS.NAME, CAL.INPUT.FACTOR_NAME
+    </select>
+
+    <!-- wu.zhou 2022-12-16 10:00 删除左连接STRATEGY_INSTANCE_CAL_INPUT，因为查询结果中未用到此表 -->
+    <select id="getDistinctStrainsList" parameterType="String" resultMap="StrategyInstanceFactorResult">
+        SELECT
+        DISTINCT
+        DEF.NAME as DEFINITION_NAME,
+        INS.ID as INSTANCE_ID,
+        INS.NAME as INSTANCE_NAME,
+        INS.DS.SYMBOLS
+        FROM
+        STRATEGY_DEFINITION DEF
+        LEFT JOIN STRATEGY_INSTANCE INS ON INS.DEFINITION_ID = DEF.ID
+        LEFT JOIN STRATEGY_INSTANCE_DS_INPUT INS_DS ON INS_DS.DEFINITION_ID = DEF.ID
+        AND INS_DS.INSTANCE_ID = INS.ID
+        <where>
+            INS.IS_DELETED = '0' AND INS.STATUS != 'STOP'
+            <if test="strategyName !=null and strategyName !=''">
+                AND DEF.NAME = #{strategyName}
+            </if>
+            <if test="strategyInstanceId !=null">
+                AND INS.ID = #{strategyInstanceId}
+            </if>
+        </where>
+    </select>
+
+    <!-- upy 20230328 项目改造查询本项目因子实例 -->
+    <resultMap id="ProjectTraStrategyInstanceVoResult" type="com.nbcb.factor.web.entity.ProjectTraStrategyInstanceVo">
+        <result property="assetPoolName" column="asset_pool_name"/>
+        <result property="assetPoolId" column="asset_pool_id"/>
+        <result property="instanceId" column="instance_id"/>
+        <result property="instanceName" column="instance_name"/>
+        <result property="strategyId" column="definition_id"/>
+        <result property="strategyName" column="definition_name"/>
+        <collection property="projectTraStrategyInstanceInputVoList" ofType="com.nbcb.factor.web.entity.ProjectTraPropertyStrategyInputVo">
+            <result property="instanceId" column="instance_id"/>
+            <result property="displayName" column="display_name"/>
+            <result property="indexCategory" column="index_category"/>
+            <result property="indicatorExec" column="indicator_exec"/>
+            <result property="configName" column="config_name"/>
+            <result property="configKey" column="config_key"/>
+            <result property="configType" column="config_type"/>
+            <result property="rowNum" column="row_num"/>
+            <collection property="projectTraConfigKeyGroupVoList" ofType="com.nbcb.factor.web.entity.ProjectTraConfigKeyGroupVo">
+                <result property="configId" column="config_id"/>
+                <result property="configKey" column="config_key"/>
+                <result property="propertyKey" column="property_key"/>
+                <result property="propertyType" column="property_type"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <sql id="projectTraSelectStrategyInstanceInputVo">
+        SELECT * FROM VIEW_INSTANCE_INFO I
+    </sql>
+
+    <select id="getProjectTraStrategyInputVoList" parameterType="String" resultMap="ProjectTraStrategyInstanceVoResult">
+        <include refid="projectTraSelectStrategyInstanceInputVo"/>
+        <where>
+            i.is_deleted = '0' and i.status != 'STOP'
+            and i.definition_name = #{strategyName}
+            <if test="strategyInstanceId !=null">
+                and i.instance_id = #{strategyInstanceId}
+            </if>
+            <if test="assetPoolIds != null and assetPoolIds.size() > 0">
+                and asset_pool_id in
+                <foreach collection="assetPoolIds" item="assetPoolId" index="index" open="(" separator="," close=")">
+                    #{assetPoolId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="getPmtaProjectTraStrategyList" parameterType="String" resultMap="ProjectTraStrategyInstanceVoResult">
+        select c.*, fi.indicator_exec
+        from (select * from factor.view_instance_info i) c
+        left join factor.factor_indicator fi on fi.indicator_name = c.index_category
+        <where>
+            c.is_deleted = '0' and c.status != 'STOP'
+            and (fi.indicator_status = 'Y' or fi.indicator_status is null)
+            <if test="strategyName !=null and strategyName != ''">
+                and c.definition_name = #{strategyName}
+            </if>
+            <if test="strategyInstanceId !=null">
+                and c.instance_id = #{strategyInstanceId}
+            </if>
+            <if test="assetPoolIds != null and assetPoolIds.size() > 0">
+                and asset_pool_id in
+                <foreach collection="assetPoolIds" item="assetPoolId" index="index" open="(" separator="," close=")">
+                    #{assetPoolId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!-- 骑乘因子实例查询 -->
+    <resultMap id="ridingYieldCurveInstanceResult" type="com.nbcb.factor.web.entity.RidingAssetPoolVo">
+        <result property="assetPoolId" column="id"/>
+        <result property="assetPoolName" column="asset_pool_name"/>
+        <result property="strategyId" column="strategy_id"/>
+        <result property="strategyName" column="strategy_name"/>
+        <collection property="strategyInstanceVoList" ofType="com.nbcb.factor.web.entity.Riding.RidingStrategyInstance">
+            <result property="instanceId" column="instance_id"/>
+            <result property="instanceName" column="instance_name"/>
+            <result property="displayName" column="display_name"/>
+            <result property="status" column="status"/>
+            <collection property="inputConfigList" ofType="com.nbcb.factor.web.entity.Localcurrency.RidingInputConfig">
+                <result property="configKey" column="config_key"/>
+                <result property="configName" column="config_name"/>
+                <result property="configType" column="config_type"/>
+                <result property="propertyKey" column="property_key"/>
+                <result property="propertyName" column="property_name"/>
+                <result property="propertyType" column="property_type"/>
+                <result property="propertyValue" column="property_value"/>
+                <result property="rowNum" column="row_num"/>
+                <result property="displayOrder" column="display_order"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getRidingYieldCurveInstanceList"
+            resultType="String">
+        else sgc.property_value end) as property_value,
+        sgc.row_num,
+        sgc.display_order
+        from asset_pool_info api
+        left join asset_pool_strategy_instance apsi
+        on apsi.asset_pool_id = api.id
+        left join strategy_instance i
+        on i.id = apsi.instance_id
+        left join strategy_definition sd
+        on sd.id = i.definition_id
+        left join strategy_instance_input sii
+        on sii.instance_id = i.id
+        left join strategy_global_config sgc
+        on sgc.asset_pool_id = api.id
+        <where>
+            i.is_deleted = '0' and i.status ='START'
+            and sd.name = #{strategyName}
+            <if test="instanceIdList !=null and instanceIdList.size()>0">
+                and i.id in
+                <foreach collection="instanceIdList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="assetPoolIdList !=null and assetPoolIdList.size()>0">
+                and api.id in
+                <foreach collection="assetPoolIdList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="ridingCbondCurveCnbdVoResult" type="com.nbcb.factor.web.entity.BondCurveCnbdVo">
+        <result property="analCurveterm" column="b_anal_curveterm"/>
+        <result property="analYield" column="b_anal_yield"/>
+        <result property="analCurvenumber" column="b_anal_curvenumber"/>
+        <result property="analCurvename" column="b_anal_curvename"/>
+    </resultMap>
+
+    <!-- 1232（国债）,1322（口行债）,2142（国开债）,2352（农发债） -->
+    <select id="getRidingBondCurveCNBD" resultMap="ridingCbondCurveCnbdVoResult">
+        select b_anal_curveterm, b_anal_yield, b_anal_curvenumber, b_anal_curvename
+        from cBondCurveCNBD
+        WHERE b_anal_curvenumber in ('1232','2142','2352','1322')
+          and b_anal_curveterm in (0.08,0.25,0.5,0.75,1.0,1.5,2.0,3.0,5.0,7.0,10.0,15.0)
+          and trade_dt = (select max(trade_dt) from cBondCurveCNBD)
+    </select>
+
+    <select id="getBondCFAll" resultMap="bondCFVoResult">
+        SELECT C.OBJECT_ID,
+               C.S_INFO_WINDCODE,
+               C.B_INFO_CARRYDATE,
+               C.B_INFO_ENDDATE,
+               C.B_INFO_COUPONRATE,
+               C.B_INFO_PAYMENTDATE,
+               C.B_INFO_PAYMENTINTEREST,
+               C.B_INFO_PAYMENTPARVALUE,
+               C.B_INFO_PAYMENTSUM
+        FROM CBODCF C WHERE C.S_INFO_WINDCODE in (select distinct S_INFO_WINDCODE from factor.Cbonddescription)
+    </select>
+
+    <select id="getBondCFByBonds" resultMap="bondCFVoResult">
+        SELECT C.OBJECT_ID,
+               C.S_INFO_WINDCODE,
+               C.B_INFO_CARRYDATE,
+               C.B_INFO_ENDDATE,
+               C.B_INFO_COUPONRATE,
+               C.B_INFO_PAYMENTDATE,
+               C.B_INFO_PAYMENTINTEREST,
+               C.B_INFO_PAYMENTPARVALUE,
+               C.B_INFO_PAYMENTSUM
+        FROM CBODCF C WHERE C.S_INFO_WINDCODE=#{bonds}
+    </select>
+
+    <select id="selectLatestValueShiborPrices" parameterType="String" resultType="String">
+        select b_info_rate
+        from shiborprices
+        <where>
+            <if test="sInfoWindCode != '' and sInfoWindCode != null">
+                s_info_windcode = #{sInfoWindCode}
+                and trade_dt = (select max(trade_dt)
+                from shiborprices
+                where s_info_windcode = #{sInfoWindCode})
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAverageValueShiborPrices" parameterType="String" resultType="String">
+        select avg(b_info_rate) average_rate
+        from shiborprices
+        <where>
+            <if test="sInfoWindCode != '' and sInfoWindCode != null">s_info_windcode = #{sInfoWindCode}</if>
+            <if test="tradeDt != '' and tradeDt != null">and trade_dt >= #{tradeDt}</if>
+        </where>
+        ORDER BY TRADE_DT DESC
+    </select>
+
+    <select id="selectLatestValueReporInfo" parameterType="String" resultType="String">
+        select b_info_rate
+        from cbondinterbankmarketratefets
+        <where>
+            <if test="sInfoWindCode != '' and sInfoWindCode != null">
+                s_info_windcode = #{sInfoWindCode}
+                and trade_dt = (select max(trade_dt)
+                from cbondinterbankmarketratefets
+                where s_info_windcode = #{sInfoWindCode})
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAverageValueReporRate" parameterType="String" resultType="String">
+        select avg(b_info_rate) average_rate
+        from cbondinterbankmarketratefets
+        <where>
+            <if test="sInfoWindCode != '' and sInfoWindCode != null">s_info_windcode = #{sInfoWindCode}</if>
+            <if test="tradeDt != '' and tradeDt != null">and trade_dt >= #{tradeDt}</if>
+        </where>
+        ORDER BY TRADE_DT DESC
+    </select>
+
+    <resultMap id="rateVoResult" type="com.nbcb.factor.web.entity.RateVo">
+        <result property="tradeDt" column="trade_dt"/>
+        <result property="rate" column="b_info_rate"/>
+    </resultMap>
+
+    <select id="queryAverageValueShiborPrices" parameterType="String" resultMap="rateVoResult">
+        select s.trade_dt, s.b_info_rate
+        from shiborprices s
+        where s.s_info_windcode = #{sInfoWindCode}
+          and to_date(s.trade_dt, 'YYYY-MM-DD') >=
+              to_date(to_char(truncate(sysdate) - interval '60' month), 'YYYY-MM-DD'),
+        'YYYY-MM-DD')
+    </select>
+
+    <select id="queryAverageValueReporRate" parameterType="String" resultMap="rateVoResult">
+        select s.trade_dt, s.b_info_rate
+        from cbondinterbankmarketratefets s
+        where s.s_info_windcode = #{sInfoWindCode}
+          and to_date(s.trade_dt, 'YYYY-MM-DD') >=
+              to_date(to_char(truncate(sysdate) - interval '60' month), 'YYYY-MM-DD'),
+        'YYYY-MM-DD')
+    </select>
+
+    <resultMap id="subscriptionAssetDataResult" type="com.nbcb.factor.web.entity.SubscriptionAssetDataVo">
+        <result property="symbol" column="symbol"/>
+        <result property="symbolType" column="symbolType"/>
+    </resultMap>
+
+    <select id="selectSubscriptionAssetData" parameterType="String" resultMap="subscriptionAssetDataResult">
+        select * from view_subscription_asset_data v
+        <where>
+            v.symbolType = #{symbolType,jdbcType=VARCHAR}
+            <if test="symbol != '' and symbol != null">
+                and v.symbol = #{symbol,jdbcType=VARCHAR}
+            </if>
+            <if test="strategyName != '' and strategyName != null">
+                and v.strategyName = #{strategyName,jdbcType=VARCHAR}
+            </if>
+            <if test="strategyInstanceId != '' and strategyInstanceId != null">
+                and v.strategyInstanceId = #{strategyInstanceId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

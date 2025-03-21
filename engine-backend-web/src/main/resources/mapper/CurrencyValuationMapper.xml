@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.CurrencyValuationMapper">
+    <resultMap type="com.nbcb.factor.web.entity.CurrencyValuation" id="CurrencyValuationResult">
+        <result property="ID" column="id"/>
+        <result property="securitySuperType" column="security_Super_Type"/>
+        <result property="termToMaturityString" column="term_To_Maturity_String"/>
+        <result property="securityId" column="security_Id"/>
+        <result property="symbol" column="symbol"/>
+        <result property="securityDec" column="security_Dec"/>
+        <result property="securityTypeId" column="security_Type_Id"/>
+        <result property="tradeDt" column="trade_Dt"/>
+        <result property="rateValue" column="rate_Value"/>
+        <result property="issueSize" column="issue_Size"/>
+    </resultMap>
+    <select id="selectCurrencyValuationList" parameterType="String" resultMap="CurrencyValuationResult">
+        select * from vw_currencyvaluation
+        <where>
+            trade_dt <![CDATA[>=]]> #{startDate}
+            and trade_dt <![CDATA[<=]]> #{endDate}
+            and security_id in (#{securityId1,#{securityId2})
+        </where>
+    </select>
+
+    <select id="getCurrencyValuation" parameterType="String" resultMap="CurrencyValuationResult">
+        select *
+        from (select *
+              from vw_currencyvaluation
+              where trade_dt <![CDATA[>=]]> #{startDate}
+                and security_id = #{securityId}
+              order by trade_dt desc) t
+        where rownum = 1
+    </select>
+    <select id="selectNewCurrencyValuationList" resultMap="CurrencyValuationResult" resultSetType="FORWARD_ONLY"
+            fetchSize="1000">
+        select rbsm.*, v.rate_value, v.trade_dt
+        from (select t.id,
+                     t.security_super_type,
+                     t.term_to_maturity_string,
+                     t.security_dec,
+                     t.security_type_id,
+                     t.issue_size,
+                     (case where t.security_super_type ='IRS' then t.security_id else concat(t.security_id,'.IB') end) as security_id,
+                     t.symbol
+              from smds.rdi_bond_security_master t) rbsm
+                 left join (select c.rate_value, c.trade_dt, c.security_id from vm_m_currencyvaluation c) v
+                           on v.security_id = rbsm.security_id
+    </select>
+    <update id="createMaterializedView">
+        create
+        materialized view factor.vm_m_currencyvaluation
+        build immediate refresh force on demand start with sysdate next trunc(sysdate,'mi') +1/24
+        as
+        select distinct id, security_id, trade_dt, rate_value
+        from (select t1.id          id,
+                     t1.security_id security_id,
+                     t1.trade_dt    trade_dt,
+                     t1.rate        rate_value
+              from factor.rateswapclosingcurve t1
+              where t1.trade_dt =
+                    (select max(f.trade_dt) from factor.rateswapclosingcurve f)
+              union all
+              select t2.object_id         id,
+                     t2.s_info_windcode   security_id,
+                     t2.trade_dt          trade_dt,
+                     t2.b_anal_yield_cnbd rate_value) from factor.cbondanalsiscnbdall t2
+        where t2.b_anal_credibility = '推荐'
+          and t2.trade_dt = (select max (e.trade_dt) from factor.cbondanalysiscnbdall e))
+    </update>
+    <update id="deleteMaterializeView">
+        drop
+        materialized view factor.vw_m_currencyvaluation
+    </update>
+
+    <update id="createMaterializedViewIndex">
+        create index index_vw_valuation_symbol_id on factor.vm_m_currencyvaluation (security_id)
+    </update>
+</mapper>

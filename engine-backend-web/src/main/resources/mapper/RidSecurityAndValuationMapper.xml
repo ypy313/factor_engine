@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.RidSecurityAndValuationMapper">
+
+    <resultMap type="com.nbcb.factor.output.bondprice.BondBasisStaticData" id="RidSecurityValuationResult">
+        <result property="securitySuperType" column="security_super_type"/>
+        <result property="securityDec" column="security_dec"/>
+        <result property="securityId" column="security_id"/>
+        <result property="symbol" column="symbol"/>
+        <result property="termToMaturityString" column="term_to_maturity_string"/>
+        <result property="valuation" column="rate_value"/>
+        <result property="tradeDt" column="trade_dt"/>
+    </resultMap>
+
+    <select id="selectAllRidSecurityValuation" resultMap="RidSecurityValuationResult">
+        select rbsm.*, v.rate_value, v.trade_dt
+        from (select t.security_super_type,
+                     t.term_to_maturity_string,
+                     t.security_dec,
+                     case
+                         when t.security_super_type = 'IRS' then t.security_id
+                         else concat(t.security_id, '.IB')
+                         end as security_id,
+                     t.symbol
+              from smds.rdi_bond_security_master t) rbsm
+                 left join (select c.rate_value, c.trade_dt, c.security_id
+                            from VW_CURRENCYVALUATION c
+                            where c.trade_dt = (select max(f.trade_dt)
+                                                from VW_CURRENCYVALUATION f) v
+                            on v.security_id = rbsm.security_id
+        ) v on v.security_id = rbsm.security_id
+    </select>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.FactorFxOhlcDetailMapper">
+    <insert id="insertFactorFxOhlcDetailList" parameterType="com.nbcb.factor.web.entity.OhlcValueEvent">
+        INSERT INTO smds.FACTOR_FX_OHLC_DETAIL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            ID,
+            <if test="eventId != null and eventId != ''">EVENT_ID,</if>
+            <if test="ric != null and ric != ''">RIC,</if>
+            <if test="symbol != null and symbol != ''">SYMBOL,</if>
+            <if test="source != null and source != ''">SOURCE,</if>
+            <if test="period != null and period != ''">PERIOD,</if>
+            <if test="instanceId != null and instanceId != ''">INSTANCE_ID,</if>
+            <if test="srcTimeStamp != null and srcTimeStamp != ''">SRC_TIMESTAMP,</if>
+            <if test="beginTime != null and beginTime != ''">BEGIN_TIME,</if>
+            <if test="endTime != null and endTime != ''">END_TIME,</if>
+            <if test="openPrice != null and openPrice != ''">OPEN_PRICE,</if>
+            <if test="highPrice != null and highPrice != ''">HIGH_PRICE,</if>
+            <if test="lowPrice != null and lowPrice != ''">LOW_PRICE,</if>
+            <if test="closePrice != null and closePrice != ''">CLOSE_PRICE,</if>
+            DB_CREATE_TIME
+        </trim>
+    </insert>
+</mapper>

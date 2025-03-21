@@ -51,11 +51,11 @@ public interface RidingYieldCurveMapper {
     /**
      * 珊瑚昨日shibor利率
      */
-    int deleteShiorprices();
+    int deleteShiborprices();
     /**
      * 新增昨日shibor利率表
      */
-    int insertShiorprices();
+    int insertShiborprices();
     /**
      * 清空现金流cbondcf表数据
      */

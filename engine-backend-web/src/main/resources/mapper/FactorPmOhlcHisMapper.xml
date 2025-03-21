@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.FactorPmOhlcHisMapper">
+    <resultMap type="com.nbcb.factor.web.entity.FactorOhlcHis" id="FactorFx0hlcHisResult">
+        <result property="id" column="id"/>
+        <result property="eventId" column="event_id"/>
+        <result property="ric" column="ric"/>
+        <result property="symbol" column="symbol"/>
+        <result property="source" column="source"/>
+        <result property="period" column="period"/>
+        <result property="beginTime" column="begin_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="tradeDate" column="trade_date"/>
+        <result property="openPrice" column="open_price"/>
+        <result property="highPrice" column="high_price"/>
+        <result property="lowPrice" column="low_price"/>
+        <result property="closePrice" column="close_price"/>
+        <result property="volume" column="volume"/>
+        <result property="sourceType" column="source_type"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectHistoryFactorPm0hlcHisList" parameterType="com.nbcb.factor.web.entity.FactorOhlcHis" resultMap="FactorFx0hlcHisResult">
+        select *
+        from (select symbol,
+        open_price,
+        high_price,
+        low_price,
+        close_price,
+        begin_time,
+        end_time,
+        period,
+        source_type
+        from smds.factor_pm_ohlc_his
+        order by begin_time desc) ohlc
+        <where>
+            <if test="count != null"> and rownum &lt;= #{count}</if>
+            <if test="symbol != null and symbol != ''"> and symbol = #{symbol}</if>
+            <if test="period != null and period != ''"> and period = #{period}</if>
+        </where>
+    </select>
+
+    <select id="selectBarNum" resultType="int">
+        select count(*)
+        from factor_pm_ohlc_his
+        <where>
+            <choose>
+                <when test="period =='1D' or period =='1Month'">
+                    <if test="x1Time !='' and x1Time !=''">and to_timestamp(#{x1Time}, 'yyyyMMdd hh24:mi:ss') <![CDATA[<]]> begin_time</if>
+                    <if test="x2Time !='' and x2Time !=''">and to_timestamp(#{x2Time}, 'yyyyMMdd hh24:mi:ss') <![CDATA[>=]]> begin_time</if>
+                </when>
+                <otherwise>
+                    <if test="x1Time !='' and x1Time !=''">and to_timestamp(#{x1Time}, 'yyyyMMdd hh24:mi:ss') <![CDATA[<]]> end_time</if>
+                    <if test="x2Time !='' and x2Time !=''">and to_timestamp(#{x2Time}, 'yyyyMMdd hh24:mi:ss') <![CDATA[>=]]> end_time</if>
+                </otherwise>
+            </choose>
+            <if test="symbol !='' and symbol !=''">and symbol =#{symbol}</if>
+            <if test="period !='' and period !=''">and period =#{period}</if>
+        </where>
+    </select>
+
+    <select id="selectHasBar" resultType="integer">
+        select count(*)
+        from factor_pm_ohlc_his
+        <where>
+            <choose>
+                <when test="period =='1D' or period =='1Month'">
+                    <if test="time !='' and time !=''">and to_timestamp(#{time}, 'yyyyMMdd hh24:mi:ss') = begin_time</if>
+                </when>
+                <otherwise>
+                    <if test="time !='' and time !=''">and to_timestamp(#{time}, 'yyyyMMdd hh24:mi:ss') = end_time</if>
+                </otherwise>
+            </choose>
+            <if test="symbol !='' and symbol !=''">and symbol =#{symbol}</if>
+            <if test="period !='' and period !=''">and period =#{period}</if>
+        </where>
+    </select>
+</mapper>

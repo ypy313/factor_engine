@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.RateSwapClosingCurveMapper">
+    <!-- 生成行情数据 -->
+    <insert id="insertBatch">
+        INSERT INTO RATESWAPCLOSINGCURVE (ID, CURVE_ID, CURVE_NAME, SECURITY_ID, SYMBOL, RATE, TRADE_DT, CREATE_TIME)
+        <foreach collection="list" item="item" open="(" separator="union all" close=")">
+            SELECT
+            #{item.id,jdbcType=VARCHAR},
+            #{item.curveId,jdbcType=VARCHAR},
+            #{item.curveName,jdbcType=VARCHAR},
+            #{item.securityId,jdbcType=VARCHAR},
+            #{item.symbol,jdbcType=VARCHAR},
+            #{item.term,jdbcType=VARCHAR},
+            #{item.rate,jdbcType=FLOAT},
+            #{item.tradeDt,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=DATE}
+            FROM DUAL
+        </foreach>
+    </insert>
+
+    <delete id="deleteByTradeDt">
+        DELETE FROM RATESWAPCLOSINGCURVE where TRADE_DT = #{tradeDt,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectNumByTradeDt" resultType="integer">
+        select count(1) from factor.RATESWAPCLOSINGCURVE where trade_dt = #{tradeDt,jdbcType=VARCHAR}
+    </select>
+</mapper>

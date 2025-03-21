@@ -18,7 +18,7 @@ public interface IdataMapper {
     /**
      * 数据差量同步到INDVBOND_LOAN_ANALYSIS
      */
-    void mergeIndvbondTradingAction();
+    void mergeIndvBondTradingAction();
     /**
      * 数据差量同步到BOND_LENDING_SUMMARY_ANALYSIS
      */
@@ -34,7 +34,7 @@ public interface IdataMapper {
     /**
      * 删除infa表和indvbondTradingAction
      */
-    void deleteIndvbondTradingAction();
+    void deleteIndvbondTradingAction(TimeConfigDto timeConfigDto);
     /**
      * 删除infa表和IndvBondCounterpartyAnalysis都存在的数据
      */
@@ -54,7 +54,7 @@ public interface IdataMapper {
     /**
      * 创建IndvBondCounterpartyAnalysis临时表
      */
-    void createTempleIndvBondCounterpartyAnalysis();
+    void createTempIndvBondCounterpartyAnalysis();
     /**
      * 将IndvBondCounterpartyAnalysis
      */
@@ -138,7 +138,7 @@ public interface IdataMapper {
     /**
      * 将reporOrgBehavior 插入临时表
      */
-    void insertTempReportOrBehavior();
+    void insertTempReportOrgBehavior();
     /**
      * 清理ReporOrgBehavior
      */

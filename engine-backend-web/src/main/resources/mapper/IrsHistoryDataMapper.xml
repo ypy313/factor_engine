@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.IrsHistoryDataMapper">
+    <insert id="insertIrsHistoryData">
+        insert into factor.irs_history_data(
+        <if test="referenceRate != null and referenceRate != ''">reference_rate,</if>
+        <if test="swapTerm != null and swapTerm != ''">swap_term,</if>
+        <if test="valueDate != null and value != ''">value_date,</if>
+        <if test="dueDate != null and dueDate != ''">due_date,</if>
+        <if test="startDate != null and startDate != ''">start_date,</if>
+        <if test="endDate != null and endDate != ''">end_date,</if>
+        <if test="interestAccrualDate != null and interestFixedDate != ''">interest_fixed_date,</if>
+        <if test="interestAccrualDays != null and interestAccrualDays != ''">interest_accrual_days,</if>
+        <if test="interestRate != null and interestRate != ''">interest_rate,</if>
+        <if test="createdBy != null and createdBy != ''">created_by,</if>
+        <if test="createdTime != null and createdTime != ''">created_time,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="updateTime != null and updateTime != ''">update_time</if>
+        )
+        values (
+        <if test="referenceRate != null and referenceRate != ''">#{referenceRate},</if>
+        <if test="swapTerm != null and swapTerm != ''">#{swapTerm},</if>
+        <if test="valueDate != null and value != ''">#{valueDate},</if>
+        <if test="dueDate != null and dueDate != ''">#{dueDate},</if>
+        <if test="startDate != null and startDate != ''">#{startDate},</if>
+        <if test="endDate != null and endDate != ''">#{endDate},</if>
+        <if test="interestAccrualDate != null and interestFixedDate != ''">#{interestAccrualDays},</if>
+        <if test="interestRate != null and interestRate != ''">#{interestRate},</if>
+        <if test="createdBy != null and createdBy != ''">#{createdBy},</if>
+        <if test="createdTime != null and createdTime != ''">to_date(#{createdTime},'yyyyMMdd'),</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="updateTime != null and updateTime != ''">to_date(#{updateTime},'yyyyMMdd')</if>
+        )
+    </insert>
+
+    <delete id="deleteIrsHistoryData">
+        delete from factor.irs_history_data where value_date = #{effDate}
+        <if test="interestRate != null and interestRate != ''">and reference_rate = #{interestRate}</if>
+        <if test="swapTerm != null and swapTerm != ''">and swap_term = #{swapTerm}</if>
+    </delete>
+
+    <select id="callUpdateCaseFlowRate" parameterType="String" statementType="CALLABLE">
+        {
+            CALL UPDATE_CASE_FLOW_RATE(#{updateDate})
+            }
+    </select>
+
+    <resultMap type="com.nbcb.factor.web.entity.IrsHistoryData" id="irsHistoryDataResult">
+        <result property="referenceRate" column="reference_rate"/>
+        <result property="swapTerm" column="swap_term"/>
+        <result property="valueDate" column="value_date"/>
+    </resultMap>
+
+    <select id="selectNowValueDate" resultMap="irsHistoryDataResult">
+        select x.reference_rate, x.swap_term, x.value_date
+        from (select row_number() over(partition by d.reference_rate, d.swap_term order by d.value_date desc) rn, d.reference_rate,
+                     d.swap_term,
+                     d.value_date
+              from irs_history_data d
+              where to_date(d.value_date, 'YYYYMMDD') >=
+                    to_date(to_char(truncate(sysdate) - interval '60' month), 'YYYYMMDD')) x
+        where x.rn = 1
+    </select>
+</mapper>

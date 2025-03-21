@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.SysFactorFavMapper">
+
+    <select id="selectJobNumFavByInstance" resultType="String">
+        select su.job_id
+        from factor.strategy_instance si
+        left join factor.sys_factor_fav sff
+        on sff.instance_id = si.id
+        left join factor.sys_user su
+        on sff.user_id = su.user_id
+        <where>
+            si.is_deleted = 0 and su.job_id is not null
+            <if test="instanceId != null and instanceId !=''"> and si.id = #{instanceId}</if>
+        </where>
+    </select>
+
+    <resultMap id="sysUserEntityResult" type="com.nbcb.factor.web.entity.user.SysUserEntity">
+        <result property="jobId" column="job_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="workStartTime" column="work_start_time"/>
+        <result property="workEndTime" column="work_end_time"/>
+        <result property="userName" column="user_name"/>
+        <result property="pushStartTime" column="push_start_time"/>
+        <result property="pushEndTime" column="push_end_time"/>
+    </resultMap>
+
+    <select id="selectJobWorkTimeByInstance" resultMap="sysUserEntityResult" parameterType="String">
+        select su.job_id,su.user_id,su.user_name,su.work_start_time,su.work_end_time
+        from factor.strategy_instance si
+        left join factor.sys_factor_fav sff
+        on sff.instance_id = si.id
+        left join factor.sys_user su
+        on sff.user_id = su.user_id
+        <where>
+            si.is_deleted = 0 and su.job_id is not null
+            <if test="instanceId != null and instanceId !=''"> and si.id = #{instanceId}</if>
+        </where>
+    </select>
+
+    <select id="selectPushTimeByInstanceId" resultMap="sysUserEntityResult">
+        select a.push_end_time, b.push_start_time
+        from (select sii.id,
+                     sii.property_value as push_end_time,
+                     sii.instance_id
+              from factor.strategy_instance_input sii
+              where sii.property_key = 'pushEndTime'
+                and sii.instance_id = #{instanceId}) a
+                 left join (select sii.id,
+                                   sii.property_value as push_start_time,
+                                   sii.instance_id
+                            from factor.strategy_instance_input sii
+                            where sii.property_key = 'pushStartTime'
+                              and sii.instance_id = #{instanceId}) b
+                           on a.id = b.id
+    </select>
+
+</mapper>

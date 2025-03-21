@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.FactorPmSymbolMapper">
+    <resultMap type="com.nbcb.factor.web.entity.FactorInstanceConfigData" id="FactorInstanceConfigDataResult">
+        <result property="id" column="id"/>
+        <result property="configInfoId" column="config_info_id"/>
+        <result property="dataKey" column="data_key"/>
+        <result property="dataName" column="data_name"/>
+        <result property="dataType" column="data_type"/>
+        <result property="defauleValue" column="defaule_value"/>
+        <result property="isInitialValue" column="is_initial_value"/>
+        <result property="minValue" column="min_value"/>
+        <result property="maxValue" column="max_value"/>
+        <result property="displayOrder" column="display_order"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <insert id="insertSymbolList">
+        insert into instance_config_data(
+        <if test="configInfoId != null and configInfoId != ''">config_info_id,</if>
+        <if test="dataKey != null and dataKey != ''">data_key,</if>
+        <if test="dataName != null and dataName != ''">data_name,</if>
+        <if test="dataType != null and dataType != ''">data_type,</if>
+        <if test="defautValue != null and defautValue != ''">default_value,</if>
+        <if test="isInitialValue != null and isInitialValue != ''">is_initial_value,</if>
+        <if test="minValue != null and minValue != ''">min_value,</if>
+        <if test="maxValue != null and maxValue != ''">max_value,</if>
+        <if test="displayOrder != null and displayOrder != ''">display_order,</if>
+        <if test="createdBy != null and createdBy != ''">created_by,</if>
+        <if test="createdTime != null and createdTime != ''">created_time,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="updateTime != null and updateTime != ''">update_time,</if>
+        id
+        ) values (
+        <if test="configInfoId != null and configInfoId != ''">#{configInfoId},</if>
+        <if test="dataKey != null and dataKey != ''">#{dataKey},</if>
+        <if test="dataName != null and dataName != ''">#{dataName},</if>
+        <if test="dataType != null and dataType != ''">#{dataType},</if>
+        <if test="defautValue != null and defautValue != ''">#{defautValue},</if>
+        <if test="isInitialValue != null and isInitialValue != ''">#{isInitialValue},</if>
+        <if test="minValue != null and minValue != ''">#{minValue},</if>
+        <if test="maxValue != null and maxValue != ''">#{maxValue},</if>
+        <if test="displayOrder != null and displayOrder != ''">#{displayOrder},</if>
+        <if test="createdBy != null and createdBy != ''">#{createdBy},</if>
+        <if test="createdTime != null and createdTime != ''">#{createdTime},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+        #{id}
+        )
+    </insert>
+
+    <select id="getAllSymbolList" resultType="java.lang.String">
+        select distinct t3.data_key from instance_config_data t3
+                                             join instance_config_info t2 on t3.config_info_id=t2.id
+                                             join(
+            select MAX(id) AS max_id from instance_config_build
+            where definition_id=#{definitionId} and config_keys='dataSourceConfig'
+        ) t4 on t2.config_build_id=t4.max_id
+        where t2.field_key='assetPool'
+    </select>
+
+    <resultMap type="com.nbcb.factor.web.entity.FactorInstanceDefinitionSymbol" id="FactorInstanceDefinitionSymbolResult">
+        <result property="id" column="id"/>
+        <result property="definition" column="definition_Id"/>
+        <result property="indexCategory" column="index_category"/>
+        <result property="symbol" column="symbol"/>
+    </resultMap>
+
+    <select id="selectConfigInfoId" resultMap="FactorInstanceDefinitionSymbolResult">
+        select t1.id as id ,t1.index_category as index_category from instance_config_info t1
+                                                                         inner join instance_config_build t2 on t1.config_build_id = t2.id
+        where t1.definition_id=#{definitionId}
+          and t2.config_key='dataSourceConfig'
+          and t1.field_key='assetPool'
+    </select>
+
+    <select id="selectMaxDisplayOrder" resultType="java.lang.Integer">
+        select max(t2.display_order) from instance_config_data t2 where t2
+                                                                            .config_info_id=#{configInfoId};
+    </select>
+
+    <select id="getMaxConfigDataId" resultType="java.lang.Long">
+        select max(t.id) from instance_config_data t
+    </select>
+
+    <select id="getAllIndexCategorySymbol" resultMap="FactorInstanceDefinitionSymbolResult">
+        select icb.definition_id ,icb.index_category,icd.data_key as symbol
+        from instance_config_data icd
+                 left join instance_config_info ici
+                           on icd.config_info_id = ici.id
+                 left join instance_config_build icb
+                           on ici.config_build_id = icb.id
+        where ici.field_key = 'assetPool'
+          and icb.config_key = 'dataSourceConfig'
+          and icb.definition_id = #{definitionId}
+    </select>
+</mapper>

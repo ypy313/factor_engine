@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbcb.factor.web.mapper.IdataMapper">
+    <select id="selectIdataDebtMarketCount" resultType="int">
+        select count(1)
+        from factor.REPORT_DM_PERFORMANCE_INFA
+    </select>
+
+    <insert id="mergeIndvBondCounterpartyAnalysis">
+        merge into factor.INDVBOND_COUNTERPARTY_ANALYSIS ica
+            using factor.report_dm_performance_info dm
+            on (ica.id = dm.id)
+
+            when not matched then
+                insert (id,
+                        ric,
+                        pro_type,
+                        tran_date,
+                        bond_code,
+                        bond_name,
+                        bond_type,
+                        ins_type,
+                        buy_size,
+                        trade_qty_ratio,
+                        trade_party_cq,
+                        msg_source,
+                        msg_data,
+                        up_date,
+                        msg_date)
+                    values (dm.id,
+                            dm.ric,
+                            dm.pro_type,
+                            dm.tran_date,
+                            dm.bond_code,
+                            dm.bond_name,
+                            dm.bond_type,
+                            dm.ins_type,
+                            dm.buy_size,
+                            dm.trade_qty_ratio,
+                            dm.trade_party_cq,
+                            dm.msg_source,
+                            dm.msg_data,
+                            dm.up_date,
+                            dm.msg_date)
+            where dm.pro_type='22'
+    </insert>
+
+    <insert id="mergeIndvBondLoanAnalysis">
+        merge into factor.INDVBOND_LOAN_ANALYSIS ica
+            using factor.report_dm_performance_info dm
+            on (ica.id = dm.id)
+            when not matched then
+                insert (ric,
+                        pro_type,
+                        tran_date,
+                        bond_code,
+                        bond_name,
+                        bond_type,
+                        ins_type,
+                        deal_amount,
+                        deal_num,
+                        wi_rate,
+                        bond_ct,
+                        balance,
+                        re_balance,
+                        net_balance,
+                        msg_source,
+                        id,
+                        msg_data,
+                        up_date,
+                        msg_date)
+                    values (dm.ric,
+                            dm.pro_type,
+                            dm.tran_date,
+                            dm.bond_code,
+                            dm.bond_name,
+                            dm.bond_type,
+                            dm.ins_type,
+                            dm.deal_amount,
+                            dm.deal_num,
+                            dm.wi_rate,
+                            dm.bond_ct,
+                            dm.balance,
+                            dm.re_balance,
+                            dm.net_balance,
+                            dm.msg_source,
+                            dm.id,
+                            dm.msg_data,
+                            dm.up_date,
+                            dm.msg_date)
+            where dm.pro_type='23'
+    </insert>
+
+    <insert id="mergeIndvBondTradingAction">
+        merge into factor.INDVBOND_TRADING_ACTION ica
+            using factor.report_dm_performance_info dm
+            on (ica.id = dm.id)
+            when not matched then
+                insert (ID,
+                        RIC,
+                        PRO_TYPE,
+                        TRAN_DATE,
+                        Bond_CODE,
+                        Bond_NAME,
+                        Bond_TYPE,
+                        INS_TYPE,
+                        DEAL_AMOUNT,
+                        DEAL_NUM,
+                        MOD_DURATION,
+                        TURNOVER_RATE,
+                        CONVEXITY,
+                        ENTITY_CNT,
+                        WI_RATE,
+                        BUY_YIELD,
+                        SELL_YIELD,
+                        MSG_SOURCE,
+                        MSG_DATE,
+                        MSG_DATA,
+                        UP_DATE,
+                        TRANSACTIONTIME,
+                        MKT_IND,
+                        CREDIT_RATING,
+                        IC_RATING,
+                        CIRCULATION_SIZE,
+                        MARGIN_TOTAL_AMT,
+                        MT_NUM,
+                        QUANTITY,
+                        BUY_LASTQTY,
+                        SELL_LASTQTY)
+                    values (dm.ID,
+                            dm.RIC,
+                            dm.PRO_TYPE,
+                            dm.TRAN_DATE,
+                            dm.Bond_CODE,
+                            dm.Bond_NAME,
+                            dm.Bond_TYPE,
+                            dm.INS_TYPE,
+                            dm.DEAL_AMOUNT,
+                            dm.DEAL_NUM,
+                            dm.MOD_DURATION,
+                            dm.TURNOVER_RATE,
+                            dm.CONVEXITY,
+                            dm.ENTITY_CNT,
+                            dm.WI_RATE,
+                            dm.BUY_YIELD,
+                            dm.SELL_YIELD,
+                            dm.MSG_SOURCE,
+                            dm.MSG_DATE,
+                            dm.MSG_DATA,
+                            dm.UP_DATE,
+                            dm.TRANSACTIONTIME,
+                            dm.MKT_IND,
+                            dm.CREDIT_RATING,
+                            dm.IC_RATING,
+                            dm.CIRCULATION_SIZE,
+                            dm.MARGIN_TOTAL_AMT,
+                            dm.MT_NUM,
+                            dm.QUANTITY,
+                            dm.BUY_LASTQTY,
+                            dm.SELL_LASTQTY)
+            where dm.pro_type = '21'
+    </insert>
+
+    <insert id="mergeBondLendingSummaryAnalysis">
+        merge into factor.BOND_LENDING_SUMMARY_ANALYSIS ica
+            using factor.report_dm_performance_info dm
+            on (ica.id = dm.id)
+            when not matched then
+                insert (
+                        ID,
+                        RIC,
+                        PRO_TYPE,
+                        TRAN_DATE,
+                        Bond_CODE,
+                        Bond_NAME,
+                        Bond_TYPE,
+                        INS_TYPE,
+                        BALANCE,
+                        RE_BALANCE,
+                        NET_BALANCE,
+                        TRADE_LIMIT_DAYS,
+                        MSG_SOURCE,
+                        MSG_DATE,
+                        MSG_DATA,
+                        UP_DATE
+                    )
+                    values (dm.ID,
+                            dm.RIC,
+                            dm.PRO_TYPE,
+                            dm.TRAN_DATE,
+                            dm.Bond_CODE,
+                            dm.Bond_NAME,
+                            dm.Bond_TYPE,
+                            dm.INS_TYPE,
+                            dm.BALANCE,
+                            dm.RE_BALANCE,
+                            dm.NET_BALANCE,
+                            dm.TRADE_LIMIT_DAYS,
+                            dm.MSG_SOURCE,
+                            dm.MSG_DATE,
+                            dm.MSG_DATA,
+                            dm.UP_DATE)
+            where dm.pro_type='24'
+    </insert>
+
+    <select id="selectIdataOrgCount" resultType="int">
+        select count(1)
+        from factor.report_org_behavior_info
+    </select>
+
+    <insert id="mergeReportOrgBehavior">
+        merge into factor.report_org_behavior rob
+            using factor.report_org_behavior_info robi
+            on (rob.id = robi.id)
+            when not matched then
+                insert (
+                        id,
+                        ric,
+                        report_range,
+                        pro_type,
+                        report_type,
+                        ms dime,
+                        ins_type,
+                        bond_type,
+                        term,
+                        side,
+                        deal_amount,
+                        wi_rate,
+                        re_wi_rate,
+                        wi_rate_50,
+                        re_wi_rate_50,
+                        amount,
+                        re_amount,
+                        balance,
+                        re_balance,
+                        msg_source,
+                        msg_date,
+                        msg_data,
+                        up_date
+                    )
+                    values (robi.id,
+                            robi.ric,
+                            robi.report_range,
+                            robi.pro_type,
+                            robi.report_type,
+                            robi.ms dime,
+                            robi.ins_type,
+                            robi.bond_type,
+                            robi.term,
+                            robi.side,
+                            robi.deal_amount,
+                            robi.wi_rate,
+                            robi.re_wi_rate,
+                            robi.wi_rate_50,
+                            robi.re_wi_rate_50,
+                            robi.amount,
+                            robi.re_amount,
+                            robi.balance,
+                            robi.re_balance,
+                            robi.msg_source,
+                            robi.msg_date,
+                            robi.msg_data,
+                            robi.up_date)
+    </insert>
+
+    <delete id="deleteIndvbondTradingAction" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+        delete
+        from factor.indvbond_trading_action ita
+        where ita.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
+    </delete>
+
+    <delete id="deleteIndvBondCounterpartyAnalysis" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+        delete
+        from factor.indvbond_counterparty_analysis ica
+        where ica.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
+    </delete>
+
+    <delete id="deleteIndvBondLoanAnalysis" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+        delete
+        from factor.indvbond_loan_analysis ila
+        where ila.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
+    </delete>
+
+    <delete id="deleteBondLendingSummaryAnalysis" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+        delete
+        from factor.bond_lending_summary_analysis blsa
+        where blsa.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
+    </delete>
+
+    <delete id="deleteReportOrgBehavior" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+        delete
+        from factor.report_org_behavior rob
+        where rob.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
+    </delete>
+
+    <insert id="createTempIndvBondCounterpartyAnalysis">
+        create table factor.indvbond_counterparty_analysis_temp as
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.buy_size,
+               t.trade_qty_ratio,
+               t.trade_party_cq,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.indvbond_counterparty_analysis t
+        where 1 = 0
+    </insert>
+
+    <insert id="insertTempIndvBondCounterpartyAnalysis" useGeneratedKeys="false">
+        insert into factor.indvbond_counterparty_analysis_temp
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.buy_size,
+               t.trade_qty_ratio,
+               t.trade_party_cq,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.indvbond_counterparty_analysis t
+    </insert>
+
+    <delete id="truncateIndvBondCounterpartyAnalysis">
+        truncate table factor.indvbond_counterparty_analysis
+    </delete>
+
+    <insert id="insertIndvBondCounterpartyAnalysis" useGeneratedKeys="false">
+        insert into factor.indvbond_counterparty_analysis
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.buy_size,
+               t.trade_qty_ratio,
+               t.trade_party_cq,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.indvbond_counterparty_analysis_temp t
+    </insert>
+
+    <delete id="dropTempIndvBondCounterpartyAnalysis">
+        drop table factor.indvbond_counterparty_analysis_temp
+    </delete>
+
+    <insert id="createTempIndvbondTradingAction">
+        create table factor.indvbond_trading_action_temp as
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.deal_amount,
+               t.deal_num,
+               t.mod_duration,
+               t.turnover_rate,
+               t.convexity,
+               t.entity_cnt,
+               t.wi_rate,
+               t.buy_yield,
+               t.sell_yield,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date,
+               t.transacttime,
+               t.mkt_ind,
+               t.credit_rating,
+               t.ic_rating,
+               t.circulation_size,
+               t.margin_total_amt,
+               t.mt_num,
+               t.quantity,
+               t.buy_lastqty,
+               t.sell_lastqty
+        from factor.indvbond_trading_action t
+        where 1 = 0
+    </insert>
+
+    <insert id="insertTempIndvbondTradingAction" useGeneratedKeys="false">
+        insert into factor.indvbond_trading_action_temp
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.deal_amount,
+               t.deal_num,
+               t.mod_duration,
+               t.turnover_rate,
+               t.convexity,
+               t.entity_cnt,
+               t.wi_rate,
+               t.buy_yield,
+               t.sell_yield,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date,
+               t.transacttime,
+               t.mkt_ind,
+               t.credit_rating,
+               t.ic_rating,
+               t.circulation_size,
+               t.margin_total_amt,
+               t.mt_num,
+               t.quantity,
+               t.buy_lastqty,
+               t.sell_lastqty
+        from factor.indvbond_trading_action t
+    </insert>
+
+    <delete id="truncateIndvbondTradingAction">
+        truncate table factor.indvbond_trading_action
+    </delete>
+
+    <insert id="insertIndvbondTradingAction" useGeneratedKeys="false">
+        insert into factor.indvbond_trading_action
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.deal_amount,
+               t.deal_num,
+               t.mod_duration,
+               t.turnover_rate,
+               t.convexity,
+               t.entity_cnt,
+               t.wi_rate,
+               t.buy_yield,
+               t.sell_yield,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date,
+               t.transacttime,
+               t.mkt_ind,
+               t.credit_rating,
+               t.ic_rating,
+               t.circulation_size,
+               t.margin_total_amt,
+               t.mt_num,
+               t.quantity,
+               t.buy_lastqty,
+               t.sell_lastqty
+        from factor.indvbond_trading_action_temp t
+    </insert>
+
+    <delete id="dropTempIndvbondTradingAction">
+        drop table factor.indvbond_trading_action_temp
+    </delete>
+
+    <insert id="createTempIndvBondLoanAnalysis">
+        create table factor.indvbond_loan_analysis_temp as
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.deal_amount,
+               t.deal_num,
+               t.wi_rate,
+               t.bond_ct,
+               t.balance,
+               t.re_balance,
+               t.net_balance,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.indvbond_loan_analysis t
+        where 1 = 0
+    </insert>
+
+    <insert id="insertTempIndvBondLoanAnalysis" useGeneratedKeys="false">
+        insert into factor.indvbond_loan_analysis_temp
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.deal_amount,
+               t.deal_num,
+               t.wi_rate,
+               t.bond_ct,
+               t.balance,
+               t.re_balance,
+               t.net_balance,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.indvbond_loan_analysis t
+    </insert>
+
+    <delete id="truncateIndvBondLoanAnalysis">
+        truncate table factor.indvbond_loan_analysis
+    </delete>
+
+    <insert id="insertIndvBondLoanAnalysis" useGeneratedKeys="false">
+        insert into factor.indvbond_loan_analysis
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.deal_amount,
+               t.deal_num,
+               t.wi_rate,
+               t.bond_ct,
+               t.balance,
+               t.re_balance,
+               t.net_balance,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.indvbond_loan_analysis_temp t
+    </insert>
+
+    <delete id="dropTempIndvBondLoanAnalysis">
+        drop table factor.indvbond_loan_analysis_temp
+    </delete>
+
+    <insert id="createTempBondLendingSummaryAnalysis">
+        create table factor.bond_lending_summary_analysis_temp as
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.balance,
+               t.re_balance,
+               t.net_balance,
+               t.trade_limit_days,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.bond_lending_summary_analysis t
+        where 1 = 0
+    </insert>
+
+    <insert id="insertTempBondLendingSummaryAnalysis" useGeneratedKeys="false">
+        insert into factor.bond_lending_summary_analysis_temp
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.balance,
+               t.re_balance,
+               t.net_balance,
+               t.trade_limit_days,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.bond_lending_summary_analysis t
+    </insert>
+
+    <delete id="truncateBondLendingSummaryAnalysis">
+        truncate table factor.bond_lending_summary_analysis
+    </delete>
+
+    <insert id="insertBondLendingSummaryAnalysis" useGeneratedKeys="false">
+        insert into factor.bond_lending_summary_analysis
+        select t.id,
+               t.ric,
+               t.pro_type,
+               t.tran_date,
+               t.bond_code,
+               t.bond_name,
+               t.bond_type,
+               t.ins_type,
+               t.balance,
+               t.re_balance,
+               t.net_balance,
+               t.trade_limit_days,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.bond_lending_summary_analysis_temp t
+    </insert>
+
+    <delete id="dropTempBondLendingSummaryAnalysis">
+        drop table factor.bond_lending_summary_analysis_temp
+    </delete>
+
+    <insert id="createTempReportOrgBehavior">
+        create table factor.report_org_behavior_temp as
+        select t.id,
+               t.ric,
+               t.report_range,
+               t.pro_type,
+               t.report_type,
+               t.ms_dime,
+               t.ins_type,
+               t.bond_type,
+               t.term,
+               t.side,
+               t.deal_amount,
+               t.wi_rate,
+               t.re_wi_rate,
+               t.wi_rate_50,
+               t.re_wi_rate_50,
+               t.amount,
+               t.re_amount,
+               t.balance,
+               t.re_balance,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.report_org_behavior t
+        where 1 = 0
+    </insert>
+
+    <insert id="insertTempReportOrgBehavior" useGeneratedKeys="false">
+        insert into factor.report_org_behavior_temp
+        select t.id,
+               t.ric,
+               t.report_range,
+               t.pro_type,
+               t.report_type,
+               t.ms_dime,
+               t.ins_type,
+               t.bond_type,
+               t.term,
+               t.side,
+               t.deal_amount,
+               t.wi_rate,
+               t.re_wi_rate,
+               t.wi_rate_50,
+               t.re_wi_rate_50,
+               t.amount,
+               t.re_amount,
+               t.balance,
+               t.re_balance,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.report_org_behavior t
+    </insert>
+
+    <delete id="truncateReportOrgBehavior">
+        truncate table factor.report_org_behavior
+    </delete>
+
+    <insert id="insertReportOrgBehavior" useGeneratedKeys="false">
+        insert into factor.report_org_behavior
+        select t.id,
+               t.ric,
+               t.report_range,
+               t.pro_type,
+               t.report_type,
+               t.ms_dime,
+               t.ins_type,
+               t.bond_type,
+               t.term,
+               t.side,
+               t.deal_amount,
+               t.wi_rate,
+               t.re_wi_rate,
+               t.wi_rate_50,
+               t.re_wi_rate_50,
+               t.amount,
+               t.re_amount,
+               t.balance,
+               t.re_balance,
+               t.msg_source,
+               t.msg_date,
+               t.msg_data,
+               t.up_date
+        from factor.report_org_behavior_temp t
+    </insert>
+
+    <delete id="dropTempReportOrgBehavior">
+        drop table factor.report_org_behavior_temp
+    </delete>
+</mapper>
+

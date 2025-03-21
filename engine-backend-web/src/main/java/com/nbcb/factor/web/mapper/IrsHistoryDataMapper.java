@@ -21,7 +21,7 @@ public interface IrsHistoryDataMapper {
     /**
      * 调用存储过程更新利率
      */
-    void calUpdateCaseFlowRate(String updateDate);
+    void callUpdateCaseFlowRate(String updateDate);
     /**
      * 查询最新利率_期限对应的起息日
      */
