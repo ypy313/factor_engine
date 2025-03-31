@@ -55,4 +55,35 @@ public class AllRedisConstants {
     //FACTOR:COMMON:CBOND_CURVE_CNBD 收益率曲线
     public static final String FACTOR_COMMON_CBOND_CURVE_CNBD =
             StringUtil.redisKeyCommonJoint(DataTypeEnum.CBOND_CURVE_CNBD.getKey());
+
+    //FACTOR:COMMON:REPO_7D REPO_7D利率表
+    public static final String FACTOR_COMMON_REPO_7D =
+            StringUtil.redisKeyCommonJoint(DataTypeEnum.REPO_7D.getKey());
+    //FACTOR:COMMON:SHIBOR_7D
+    public static final String FACTOR_COMMON_SHIBOR_7D = StringUtil
+            .redisKeyCommonJoint(DataTypeEnum.SHIBOR_7D.getKey());
+    //FACTOR:COMMON:CBONDCF
+    public static final String FACTOR_COMMON_CBONDCF = StringUtil
+            .redisKeyCommonJoint(DataTypeEnum.CBONDCF.getKey());
+
+    //FACTOR:COMMON:HOLIDAY HOLIDAY假日数据
+    public static final String FACTOR_COMMON_HOLIDAY = StringUtil
+            .redisKeyCommonJoint(DataTypeEnum.HOLIDAY.getKey());
+//FACTOR:RIDING:FUR_RIDING_YIELD_CURVE:* FUR_RIDING_YIELD_CURVE收益率曲线chart
+    public static final String FACTOR_RIDING_FUR_RIDING_YIELD_CURVE = StringUtil
+            .redisKeyCommonJoint(DataTypeEnum.FUR_RIDING_YIELD_CURVE.getKey());
+
+    //FACTOR:RIDING:RIDING_CAL_DATA_TABLE:* RIDING_CAL_DATA_TABLE 收益率表table
+    public static final String FACTOR_RIDING_RIDING_CAL_DATA_TABLE = StringUtil
+            .redisKeyCommonJoint(DataTypeEnum.RIDING_CAL_DATA_TABLE.getKey());
+
+    //FACTOR:COMMON:SHIBOR_3M SHIBOR_3M利率表
+    public static final String FACTOR_COMMON_SHIBOR_3M = StringUtil
+            .redisKeyCommonJoint(DataTypeEnum.SHIBOR_3M.getKey());
+
+    //FACTOR:COMMON:CBONDANALYSISCNBD 中债估值
+    public static final String FACTOR_COMMON_CBONDANALYSISCNBD = StringUtil
+            .redisKeyCommonJoint(DataTypeEnum.CBONDANALYSISCNBD.getKey());
+
+
 }

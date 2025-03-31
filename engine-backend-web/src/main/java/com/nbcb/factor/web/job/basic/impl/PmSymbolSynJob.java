@@ -100,7 +100,7 @@ public class PmSymbolSynJob implements FactorBasicJob {
             factorInstanceConfigData.setDataKey(definitionIndexSymbols[2]);
             factorInstanceConfigData.setDataName(definitionIndexSymbols[2]);
             factorInstanceConfigData.setDataType("String");
-            factorInstanceConfigData.setDefaultValue(definitionIndexSymbols[2]);
+            factorInstanceConfigData.setDefauleValue(definitionIndexSymbols[2]);
             factorInstanceConfigData.setDisplayOrder(displayOrder+1);
             factorInstanceConfigData.setId(++maxConfigDataId);
             addSymbolList.add(factorInstanceConfigData);

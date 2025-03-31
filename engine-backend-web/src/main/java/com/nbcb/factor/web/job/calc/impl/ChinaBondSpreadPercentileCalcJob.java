@@ -13,6 +13,7 @@ import com.nbcb.factor.web.service.StrategyInstanceService;
 import com.nbcb.factor.web.util.ExceptionUtils;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.log.XxlJobLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class ChinaBondSpreadPercentileCalcJob implements FactorCalcJob {
     @Value("5")

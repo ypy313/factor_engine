@@ -95,6 +95,23 @@ public class Constants {
     public static final String FR007_IR = "FR007.IR";
     public static final String SHIBOR3M_IR = "SHIBOR3M.IR";
     public static final String SHIBOR1W_IR = "SHIBOR1M.IR";
+    public static final String FROO7_IR = "FROO7.IR";
+
+    public static final String FUNDS_RATE_KEY_REPO7D = "Repo7D";//Repo7D
+    public static final String FUNDS_RATE_KEY_SHIBOR7D = "Shibor7D";
+    public static final String SETTLEMENT_DATE_TYPE_T_1 = "T1";
+    public static final String SETTLEMENT_DATE_TYPE_T_0 = "T0";
+    public static final String YIELD_NOW = "now";
+    public static final String YIELD_FUTURE = "future";
+    public static final String DUE_DATE = "dueDate";
+    public static final String FUNDS_RATE_KEY = "fundsRate";//资金利率类型key
+    public static final String FUTURE_DEVIATION_TYPE = "futureDeviation";//未来偏离类型
+    public static final String INTEREST_RATE_VALUE = "interestRateValue";
+    public static final String FUTURE_DEVIATION = "futureDeviation";//未来偏离
+    public static final String FUTURE_DEVIATION_CURRENT_DEVIATION = "currentDeviation";//当前偏离
+    public static final String FUTURE_DEVIATION_CURRENT_ALL = "all";//全部为零
+    public static final String DEVIATION_VALUE = "deviationValue";//未来偏离值
+    public static final String INTEREST_RATE_VALUE_BY_CUSTOM_VALUE = "interRateReferenceCustomValue";
 
 
 }

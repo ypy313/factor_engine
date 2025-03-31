@@ -16,6 +16,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+import static com.nbcb.factor.common.Constants.*;
+
 /**
  * 收益率曲线/回购(repo)利率表/shibor利率表数据跑批
  *
@@ -70,10 +72,10 @@ public class CBondCurveCNBDAndRepoAndShiborJob implements FactorCalcJob {
 
             // 缓存shibor3M数据(最近一年)
             XxlJobLogger.log("缓存shibor3M数据(最近一年)开始了……");
-            List<RateVo> shiborRateVoList = this.strategyInstanceMapper.queryAverageValueShiborPrices(SHIBOR3M_IR);
+            List<RateVo> shiborRate3MVoList = this.strategyInstanceMapper.queryAverageValueShiborPrices(SHIBOR3M_IR);
             if (!CollectionUtils.isEmpty(shiborRateVoList)) {
                 redisUtil.setRiding(AllRedisConstants.FACTOR_COMMON_SHIBOR_3M,
-                        JSONUtil.toJsonStr(shiborRateVoList));
+                        JSONUtil.toJsonStr(shiborRate3MVoList));
             }
             XxlJobLogger.log("缓存shibor3M数据(最近一年)结束！");
 

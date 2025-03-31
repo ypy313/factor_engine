@@ -6,7 +6,7 @@ import com.nbcb.factor.common.DateUtil;
 import com.nbcb.factor.common.RedisUtil;
 import com.nbcb.factor.entity.BondCFVo;
 import com.nbcb.factor.entity.CbondCurveCnbdVo;
-import com.nbcb.factor.entity.riding.Cbondanalysiscnbd;
+import com.nbcb.factor.entity.Cbondanalysiscnbd;
 import com.nbcb.factor.web.job.calc.FactorCalcJob;
 import com.nbcb.factor.web.mapper.CbondanalysiscnbdMapper;
 import com.nbcb.factor.web.mapper.RidingYieldCurveMapper;
@@ -97,7 +97,7 @@ public class RideBondInformationAndCashFlowJob implements FactorCalcJob {
 
             // 收益率数据处理
             XxlJobLogger.log("收益率数据同步开始。。。");
-            ridingYieldCurveMapper.insertCbondCurveCNBD(DateUtil.parseDateToStr(DateUtil.DAYSTR, date)));
+            ridingYieldCurveMapper.insertCbondCurveCNBD(DateUtil.parseDateToStr(DateUtil.DAYSTR, date));
             XxlJobLogger.log("收益率数据同步结束！");
 
         // 缓存现金流数据到redis

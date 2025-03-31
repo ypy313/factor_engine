@@ -52,6 +52,20 @@ public class DateUtil {
         return stringToDate(longToDateString(timeInMillis),YYYY_MM_DD);
     }
 
+    public static String getAfterDays(String date,int days){
+        SimpleDateFormat df = new SimpleDateFormat(DAYSTR);
+        try{
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(df.parse(date));
+            //计算日期
+            calendar.add(Calendar.DATE,days);
+            return df.format(calendar.getTime());
+        }catch (ParseException e){
+            log.info(e.getMessage());
+        }
+        return null;
+    }
+
     /**
      * String 转date
      */
@@ -91,6 +105,15 @@ public class DateUtil {
         return stringToDate(longToDateString(timeInMillis),YYYY_MM_DD);
     }
 
+    public static Date getAfterMoth(int month){
+        Date nowDate = new Date();
+        Calendar date = Calendar.getInstance();
+        date.setTime(nowDate);
+        //计算日期
+        date.add(Calendar.MONTH,month);
+        long timeInMillis = date.getTimeInMillis();
+        return stringToDate(longToDateString(timeInMillis),YYYY_MM_DD);
+    }
     /**
      * 获取现在的日期字符串，精度到毫秒
      * 日期格式：yyyyMMddHHmmssSSS
@@ -259,7 +282,7 @@ public class DateUtil {
         return dateToDateFormat(date,format);
     }
 
-    private static Date dateToDateFormat(Date date, String format) {
+    public static Date dateToDateFormat(Date date, String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         String formatString = dateFormat.format(date);
         Date data=null;
@@ -269,6 +292,102 @@ public class DateUtil {
             log.error("data -> date 格式转换有误");
         }
         return date;
+    }
+
+    /**
+     * 判断是否是星期日
+     */
+    public static boolean isSunDay(String date){
+        boolean flag = false;
+        SimpleDateFormat df = new SimpleDateFormat(DAYSTR);
+        try{
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(df.parse(date));
+            int week =calendar.get(Calendar.DAY_OF_WEEK);
+            if(week == Calendar.SUNDAY){
+                flag = true;
+            }
+        }catch (ParseException e){
+            log.info(e.getMessage());
+        }
+        return flag;
+    }
+
+    /**
+     * 判断参数的格式是否为yyyyMMdd格式的合法日期字符串
+     */
+    public static boolean isValidDate(String str){
+        try{
+            if (str!=null && !str.equals("") && str.length()==8) {
+                //闰年标志
+                boolean isLeapYear = false;
+                String year = str.substring(0,4);
+                String month = str.substring(4, 6);
+                String day = str.substring(6, 8);
+                int vYear = Integer.parseInt(year);
+                //判断年份是否合法
+                if (vYear<1900||vYear>2200) {
+                    return false;
+                }
+                //判断是否为闰年
+                if (vYear%4==0 && vYear %100 !=0 || vYear%400 == 0) {
+                    isLeapYear = true;
+                }
+                //判断月份
+                if (!isValidMonth(month,day,isLeapYear)) {
+                    return false;
+                }
+                //判断日期
+                if (!isValidDate(day)) {
+                    return false;
+                }
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //判断月份
+    private static boolean isValidMonth(String month,String day,boolean isLeapYear){
+        //判断月份
+        if (month.startsWith("0")) {
+            String units4Month = month.substring(1,2);
+            int vUnits4Month = Integer.parseInt(units4Month);
+            if (vUnits4Month == 0) {
+                return false;
+            }
+            if (vUnits4Month==2) {
+                //判断2月的天数
+                int vDays4February = Integer.parseInt(day);
+                if (isLeapYear) {
+                    if (vDays4February>29) {
+                        return false;
+                    }
+                }else {
+                    if(vDays4February>28){
+                        return false;
+                    }
+                }
+            }
+        }else {
+            //判断非0打头的月份是否合法
+            int vMonth = Integer.parseInt(month);
+            if(vMonth != 10 && vMonth!=11 && vMonth !=12){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 获取现在的日期字符串，精度到毫秒
+     */
+    public static String getSendingTimeStr(){
+        return format(new Date(),SEND_TIME_DF);
     }
 }
 

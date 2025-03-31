@@ -39,7 +39,7 @@ public class PmHolidaySynJob implements FactorBasicJob {
     public ReturnT executeJob(Object param) {
         XxlJobLogger.log("G贵金属日历跑批存储开始！");
         List<PmTpHoliday> pmTpHolidays = holidayService.selectPmHolidayByDate();
-        List<String> pmHoliday = pmTpHolidays.stream().map(e -> e.getHoliday()).collect(Collectors.toList());
+        List<String> pmHoliday = pmTpHolidays.stream().map(e -> e.getHolidayDate()).collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(pmHoliday)) {
             try {
                 XxlJobLogger.log("贵金属日历跑批redis存储开始！");

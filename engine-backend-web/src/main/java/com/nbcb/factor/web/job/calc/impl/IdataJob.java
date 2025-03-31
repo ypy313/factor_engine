@@ -117,7 +117,7 @@ public class IdataJob implements FactorCalcJob {
         public void cleanIndvBondCounterpartyAnalysis(TimeConfigDto timeConfigDto) {
 
             idataMapper.deleteIndvBondCounterpartyAnalysis(timeConfigDto);
-            idataMapper.createTemplIndvBondCounterpartyAnalysis();
+            idataMapper.createTempIndvBondCounterpartyAnalysis();
             idataMapper.insertTempIndvBondCounterpartyAnalysis();
             idataMapper.truncateIndvBondCounterpartyAnalysis();
             idataMapper.insertIndvBondCounterpartyAnalysis();

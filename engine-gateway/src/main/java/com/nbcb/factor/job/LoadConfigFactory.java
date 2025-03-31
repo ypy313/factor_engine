@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Setter
 @Slf4j
 public class LoadConfigFactory {
-    private Map<String, LoadConfigHandler<?>> handlerMap = new ConcurrentHashMap<>();
+    private Map<String, LoadConfigHandler<?> > handlerMap = new ConcurrentHashMap<>();
 
     public LoadConfigFactory(){
         Set<Class<?>> classeSet = ClassUtil.scanPackageBySuper(LoadConfigHandler.class.getPackage().getName(),LoadConfigHandler.class);
