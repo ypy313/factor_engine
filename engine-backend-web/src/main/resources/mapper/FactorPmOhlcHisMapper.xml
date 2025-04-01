@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.FactorPmOhlcHisMapper">
-    <resultMap type="com.nbcb.factor.web.entity.FactorOhlcHis" id="FactorFx0hlcHisResult">
+<mapper namespace="com.changtian.factor.web.mapper.FactorPmOhlcHisMapper">
+    <resultMap type="com.changtian.factor.web.entity.FactorOhlcHis" id="FactorFx0hlcHisResult">
         <result property="id" column="id"/>
         <result property="eventId" column="event_id"/>
         <result property="ric" column="ric"/>
@@ -23,7 +23,7 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
-    <select id="selectHistoryFactorPm0hlcHisList" parameterType="com.nbcb.factor.web.entity.FactorOhlcHis" resultMap="FactorFx0hlcHisResult">
+    <select id="selectHistoryFactorPm0hlcHisList" parameterType="com.changtian.factor.web.entity.FactorOhlcHis" resultMap="FactorFx0hlcHisResult">
         select *
         from (select symbol,
         open_price,

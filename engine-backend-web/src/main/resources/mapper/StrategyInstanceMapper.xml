@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.StrategyInstanceMapper">
+<mapper namespace="com.changtian.factor.web.mapper.StrategyInstanceMapper">
 
-    <resultMap type="com.nbcb.factor.web.entity.StrategyInstanceFactor" id="StrategyInstanceFactorResult">
+    <resultMap type="com.changtian.factor.web.entity.StrategyInstanceFactor" id="StrategyInstanceFactorResult">
         <result property="definitionName" column="DEFINITION_NAME"/>
         <result property="instanceId" column="INSTANCE_ID"/>
         <result property="instanceName" column="INSTANCE_NAME"/>
@@ -92,14 +92,14 @@
     </select>
 
     <!-- upy 20230328 项目改造查询本项目因子实例 -->
-    <resultMap id="ProjectTraStrategyInstanceVoResult" type="com.nbcb.factor.web.entity.ProjectTraStrategyInstanceVo">
+    <resultMap id="ProjectTraStrategyInstanceVoResult" type="com.changtian.factor.web.entity.ProjectTraStrategyInstanceVo">
         <result property="assetPoolName" column="asset_pool_name"/>
         <result property="assetPoolId" column="asset_pool_id"/>
         <result property="instanceId" column="instance_id"/>
         <result property="instanceName" column="instance_name"/>
         <result property="strategyId" column="definition_id"/>
         <result property="strategyName" column="definition_name"/>
-        <collection property="projectTraStrategyInstanceInputVoList" ofType="com.nbcb.factor.web.entity.ProjectTraPropertyStrategyInputVo">
+        <collection property="projectTraStrategyInstanceInputVoList" ofType="com.changtian.factor.web.entity.ProjectTraPropertyStrategyInputVo">
             <result property="instanceId" column="instance_id"/>
             <result property="displayName" column="display_name"/>
             <result property="indexCategory" column="index_category"/>
@@ -108,7 +108,7 @@
             <result property="configKey" column="config_key"/>
             <result property="configType" column="config_type"/>
             <result property="rowNum" column="row_num"/>
-            <collection property="projectTraConfigKeyGroupVoList" ofType="com.nbcb.factor.web.entity.ProjectTraConfigKeyGroupVo">
+            <collection property="projectTraConfigKeyGroupVoList" ofType="com.changtian.factor.web.entity.ProjectTraConfigKeyGroupVo">
                 <result property="configId" column="config_id"/>
                 <result property="configKey" column="config_key"/>
                 <result property="propertyKey" column="property_key"/>
@@ -161,17 +161,17 @@
     </select>
 
     <!-- 骑乘因子实例查询 -->
-    <resultMap id="ridingYieldCurveInstanceResult" type="com.nbcb.factor.web.entity.RidingAssetPoolVo">
+    <resultMap id="ridingYieldCurveInstanceResult" type="com.changtian.factor.web.entity.RidingAssetPoolVo">
         <result property="assetPoolId" column="id"/>
         <result property="assetPoolName" column="asset_pool_name"/>
         <result property="strategyId" column="strategy_id"/>
         <result property="strategyName" column="strategy_name"/>
-        <collection property="strategyInstanceVoList" ofType="com.nbcb.factor.web.entity.Riding.RidingStrategyInstance">
+        <collection property="strategyInstanceVoList" ofType="com.changtian.factor.web.entity.Riding.RidingStrategyInstance">
             <result property="instanceId" column="instance_id"/>
             <result property="instanceName" column="instance_name"/>
             <result property="displayName" column="display_name"/>
             <result property="status" column="status"/>
-            <collection property="inputConfigList" ofType="com.nbcb.factor.web.entity.Localcurrency.RidingInputConfig">
+            <collection property="inputConfigList" ofType="com.changtian.factor.web.entity.Localcurrency.RidingInputConfig">
                 <result property="configKey" column="config_key"/>
                 <result property="configName" column="config_name"/>
                 <result property="configType" column="config_type"/>
@@ -219,7 +219,7 @@
         </where>
     </select>
 
-    <resultMap id="ridingCbondCurveCnbdVoResult" type="com.nbcb.factor.web.entity.BondCurveCnbdVo">
+    <resultMap id="ridingCbondCurveCnbdVoResult" type="com.changtian.factor.web.entity.BondCurveCnbdVo">
         <result property="analCurveterm" column="b_anal_curveterm"/>
         <result property="analYield" column="b_anal_yield"/>
         <result property="analCurvenumber" column="b_anal_curvenumber"/>
@@ -307,7 +307,7 @@
         ORDER BY TRADE_DT DESC
     </select>
 
-    <resultMap id="rateVoResult" type="com.nbcb.factor.web.entity.RateVo">
+    <resultMap id="rateVoResult" type="com.changtian.factor.web.entity.RateVo">
         <result property="tradeDt" column="trade_dt"/>
         <result property="rate" column="b_info_rate"/>
     </resultMap>
@@ -330,7 +330,7 @@
         'YYYY-MM-DD')
     </select>
 
-    <resultMap id="subscriptionAssetDataResult" type="com.nbcb.factor.web.entity.SubscriptionAssetDataVo">
+    <resultMap id="subscriptionAssetDataResult" type="com.changtian.factor.web.entity.SubscriptionAssetDataVo">
         <result property="symbol" column="symbol"/>
         <result property="symbolType" column="symbolType"/>
     </resultMap>

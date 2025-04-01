@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.FactorFxSampleTickDataMapper">
+<mapper namespace="com.changtian.factor.web.mapper.FactorFxSampleTickDataMapper">
     <select id="selectTickBarNum" resultType="int">
         select count(*)
         from factor_fx_sample_tick_data

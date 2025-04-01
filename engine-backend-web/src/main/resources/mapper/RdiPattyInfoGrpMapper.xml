@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.RdiPattyInfoGrpMapper">
-    <resultMap type="com.nbcb.factor.web.entity.rdi.RdiPattyInfoGrpEntity" id="RdiPattyInfoGrpEntityResult">
+<mapper namespace="com.changtian.factor.web.mapper.RdiPattyInfoGrpMapper">
+    <resultMap type="com.changtian.factor.web.entity.rdi.RdiPattyInfoGrpEntity" id="RdiPattyInfoGrpEntityResult">
         <result property="id" column="id"/>
         <result property="cnFullName" column="cn_full_name"/>
         <result property="cnShortName" column="cn_short_name"/>

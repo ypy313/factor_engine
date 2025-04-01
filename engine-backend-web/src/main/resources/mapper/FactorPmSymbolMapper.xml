@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.FactorPmSymbolMapper">
-    <resultMap type="com.nbcb.factor.web.entity.FactorInstanceConfigData" id="FactorInstanceConfigDataResult">
+<mapper namespace="com.changtian.factor.web.mapper.FactorPmSymbolMapper">
+    <resultMap type="com.changtian.factor.web.entity.FactorInstanceConfigData" id="FactorInstanceConfigDataResult">
         <result property="id" column="id"/>
         <result property="configInfoId" column="config_info_id"/>
         <result property="dataKey" column="data_key"/>
@@ -64,7 +64,7 @@
         where t2.field_key='assetPool'
     </select>
 
-    <resultMap type="com.nbcb.factor.web.entity.FactorInstanceDefinitionSymbol" id="FactorInstanceDefinitionSymbolResult">
+    <resultMap type="com.changtian.factor.web.entity.FactorInstanceDefinitionSymbol" id="FactorInstanceDefinitionSymbolResult">
         <result property="id" column="id"/>
         <result property="definition" column="definition_Id"/>
         <result property="indexCategory" column="index_category"/>

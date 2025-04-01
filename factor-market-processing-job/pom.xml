@@ -44,7 +44,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.nbcb.factor.market.process.job.FlinkMarketProcessJob</mainClass>
+                            <mainClass>com.changtian.factor.market.process.job.FlinkMarketProcessJob</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

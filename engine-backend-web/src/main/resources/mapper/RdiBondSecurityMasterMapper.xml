@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.RdiBondSecurityMasterMapper">
-    <resultMap type="com.nbcb.factor.web.entity.rdi.RdiBondSecurityMasterEntity" id="RdiBondSecurityMasterEntityResult">
+<mapper namespace="com.changtian.factor.web.mapper.RdiBondSecurityMasterMapper">
+    <resultMap type="com.changtian.factor.web.entity.rdi.RdiBondSecurityMasterEntity" id="RdiBondSecurityMasterEntityResult">
         <result property="id" column="id"/>
         <result property="securityId" column="security_id"/>
         <result property="marketSuffix" column="market_suffix"/>

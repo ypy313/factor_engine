@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.IdataMapper">
+<mapper namespace="com.changtian.factor.web.mapper.IdataMapper">
     <select id="selectIdataDebtMarketCount" resultType="int">
         select count(1)
         from factor.REPORT_DM_PERFORMANCE_INFA
@@ -263,31 +263,31 @@
                             robi.up_date)
     </insert>
 
-    <delete id="deleteIndvbondTradingAction" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+    <delete id="deleteIndvbondTradingAction" parameterType="com.changtian.factor.web.entity.dto.TimeConfigDto">
         delete
         from factor.indvbond_trading_action ita
         where ita.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
     </delete>
 
-    <delete id="deleteIndvBondCounterpartyAnalysis" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+    <delete id="deleteIndvBondCounterpartyAnalysis" parameterType="com.changtian.factor.web.entity.dto.TimeConfigDto">
         delete
         from factor.indvbond_counterparty_analysis ica
         where ica.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
     </delete>
 
-    <delete id="deleteIndvBondLoanAnalysis" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+    <delete id="deleteIndvBondLoanAnalysis" parameterType="com.changtian.factor.web.entity.dto.TimeConfigDto">
         delete
         from factor.indvbond_loan_analysis ila
         where ila.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
     </delete>
 
-    <delete id="deleteBondLendingSummaryAnalysis" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+    <delete id="deleteBondLendingSummaryAnalysis" parameterType="com.changtian.factor.web.entity.dto.TimeConfigDto">
         delete
         from factor.bond_lending_summary_analysis blsa
         where blsa.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day
     </delete>
 
-    <delete id="deleteReportOrgBehavior" parameterType="com.nbcb.factor.web.entity.dto.TimeConfigDto">
+    <delete id="deleteReportOrgBehavior" parameterType="com.changtian.factor.web.entity.dto.TimeConfigDto">
         delete
         from factor.report_org_behavior rob
         where rob.up_date between to_date(#{beginTime}, 'yyyyMMdd') and to_date(#{endTime}, 'yyyyMMdd') + interval '1' day

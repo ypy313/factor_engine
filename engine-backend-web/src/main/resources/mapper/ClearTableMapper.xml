@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.ClearTableMapper">
+<mapper namespace="com.changtian.factor.web.mapper.ClearTableMapper">
     <sql id="ohlcList">
         id,event_id,ric,symbol,source,period,src_timestamp,begin_time,end_time,instance_id
         ,open_price,high_price,low_price,close_price,db_create_time,db_update_time

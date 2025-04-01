@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.FactorPmOhlcDetailMapper">
-    <insert id="insertFactorPmOhlcDetailList" parameterType="com.nbcb.factor.web.entity.PmOhlcValueEvent">
+<mapper namespace="com.changtian.factor.web.mapper.FactorPmOhlcDetailMapper">
+    <insert id="insertFactorPmOhlcDetailList" parameterType="com.changtian.factor.web.entity.PmOhlcValueEvent">
         INSERT INTO smds.FACTOR_PM_OHLC_DETAIL
         <trim prefix="(" suffix=")" suffixOverrides=",">
             ID,

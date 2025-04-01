@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.RateSwapClosingCurveMapper">
+<mapper namespace="com.changtian.factor.web.mapper.RateSwapClosingCurveMapper">
     <!-- 生成行情数据 -->
     <insert id="insertBatch">
         INSERT INTO RATESWAPCLOSINGCURVE (ID, CURVE_ID, CURVE_NAME, SECURITY_ID, SYMBOL, RATE, TRADE_DT, CREATE_TIME)

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbcb.factor.web.mapper.CurrencyValuationMapper">
-    <resultMap type="com.nbcb.factor.web.entity.CurrencyValuation" id="CurrencyValuationResult">
+<mapper namespace="com.changtian.factor.web.mapper.CurrencyValuationMapper">
+    <resultMap type="com.changtian.factor.web.entity.CurrencyValuation" id="CurrencyValuationResult">
         <result property="ID" column="id"/>
         <result property="securitySuperType" column="security_Super_Type"/>
         <result property="termToMaturityString" column="term_To_Maturity_String"/>
